@@ -19,15 +19,23 @@ namespace WinApp
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// APP配置文件
+        /// </summary>
         private AppConfiguration configuration => AppConfiguration.Current;
+        /// <summary>
+        /// 页面处理程序
+        /// </summary>
         public PageResolve Page { get; set; }
+        /// <summary>
+        /// 浏览器
+        /// </summary>
         public ChromiumWebBrowser Browser { get; set; }
         public RequestEventHandler BrowserEventHandler { get; private set; }
         public List<string> AvaliableResources { get; private set; } = new List<string>();
         public MainForm()
         {
             InitializeComponent();
-            //CheckForIllegalCrossThreadCalls = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -192,12 +200,22 @@ namespace WinApp
             };
 
             BrowserEventHandler.OnResourceLoadCompleteEvent += (s, e) => {
+                //Content-Type filter
+                List<string> ignoreContentType = new List<string>() {
+                    "text/html"
+                };
+
                 //资源加载完成
                 if (AvaliableResources.Contains(e.Request.Url) && e.Response.StatusCode < 300) {
-                    Page.Resources.Add(new Resource(e.Request.Url, null));
-                    Invoke(new Action(() => {
-                        if (progressBar.Value + 1 < 99)
+                    var res = new Resource(e.Request.Url, null);
+                    res.ContentType = e.Response.Headers["Content-Type"];
+                    if (!ignoreContentType.Contains(res.ContentType))
+                        Page.Resources.Add(res);
+                    Invoke(new Action(async () => {
+                        if (progressBar.Value + 1 < 99) {
+                            Page.RawHtml = (await e.Frame.GetSourceAsync()).Replace("&amp;", "&");
                             progressBarUpdate(progressBar.Value + 1);
+                        }
                     }));
                 }
             };

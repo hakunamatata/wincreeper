@@ -27,7 +27,7 @@ namespace WinApp.Core.Handlers
         {
             var tag = $"<{Name} {ResourceAttribute}=\"{url}\"";
             if (AutoClose)
-                tag += "/>";
+                tag += " />";
             else
                 tag += $"></{Name}>";
             return tag;

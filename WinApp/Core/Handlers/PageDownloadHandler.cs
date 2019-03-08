@@ -29,7 +29,7 @@ namespace WinApp.Core.Handlers
 
         public async Task DownloadPageAsync(PageResolve page)
         {
-            var resolveProgress = 20;
+            var resolveProgress = 10;
             var progressMax = (int)(page.Resources.Count * 1.25) + resolveProgress;
             var saveProgress = progressMax - page.Resources.Count;
             var rootPath = $"{configuration.AppSettings.SaveConfig.RootLocalDirectory}\\{page.Id}";
@@ -37,6 +37,7 @@ namespace WinApp.Core.Handlers
             Update(resolveProgress);
             for (var i = 0; i < page.Resources.Count; i++) {
                 var r = page.Resources[i];
+                Debug.Print($"=== Content-Type: {r.ContentType}  Url: {r.Url} ===");
                 try {
                     var resourceLocalDir = $"{rootPath}\\assets";
                     if (!Directory.Exists(resourceLocalDir))
@@ -44,9 +45,6 @@ namespace WinApp.Core.Handlers
                     await downloadResource(r, resourceLocalDir);
                     r.ResolvedUrl = "./assets/" + r.FileName;
                     var uri = new UriBuilder(r.Url);
-                    //if (configuration.AppSettings.WechatResourceDomain.Any(p => r.Url.Contains(p))) {
-                    //    configuration.AppSettings.WechatResourceDomain.ForEach(d => {
-                    // 微信特殊处理
                     uri.Query = null;
                     if (page.RawHtml.Contains($"{uri.Path}")) {
                         var strRegImage = $@"<img\b[^<>]*?\bsrc[\s\t\r\n]*=[\s\t\r\n]*[""']?[\S]*{uri.Path}[\s\t\r\n]*[^<>]*?/?[\s\t\r\n]*>";
@@ -54,13 +52,6 @@ namespace WinApp.Core.Handlers
                         if (srcReg.IsMatch(page.RawHtml)) {
                             page.RawHtml = srcReg.Replace(page.RawHtml, r.ResourceTag.Resolve(r.ResolvedUrl));
                         }
-                        //   page.RawHtml = page.RawHtml.Replace($"{d}{uri.Path}", r.ResolvedUrl);
-                        //        }
-                        //    });
-                        //}
-                        //else {
-                        //    if (page.RawHtml.Contains(r.Url))
-                        //        page.RawHtml = page.RawHtml.Replace(r.Url, r.ResolvedUrl);
                     }
                 }
                 catch (Exception ex) {
@@ -75,6 +66,12 @@ namespace WinApp.Core.Handlers
             Update(saveProgress);
         }
 
+        /// <summary>
+        /// 下载资源
+        /// </summary>
+        /// <param name="res"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
         private async Task downloadResource(Resource res, string path)
         {
             identityResource(res);
@@ -88,7 +85,6 @@ namespace WinApp.Core.Handlers
                     resUrl = resUrl.Replace("&tp=webp", "");
             }
             #endregion
-
             var request = WebRequest.Create(resUrl);
             var response = await request.GetResponseAsync();
             res.ContentType = response.ContentType;
@@ -103,7 +99,10 @@ namespace WinApp.Core.Handlers
             }
 
         }
-
+        /// <summary>
+        /// 资源识别
+        /// </summary>
+        /// <param name="res"></param>
         private void identityResource(Resource res)
         {
             var ub = new UriBuilder(res.Url);
