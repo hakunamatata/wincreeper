@@ -121,11 +121,14 @@ new Vue({
         return {
             pageData: {},
             postData: {},
-            
+            item: [1, 2, 3, 4, 5],
         }
     },
     methods: {
         support(cell, sId) {
+            this.postData.subs = [];
+            this.postData.uid = 'hello';
+            this.isactive = true;
             if (this.postData.subs.find(p => p.id == sId)) {
                 let sub = this.postData.subs.find(p => p.id == sId)
                 sub.ops = [{
@@ -141,6 +144,7 @@ new Vue({
                     }]
                 })
             }
+            
 
             //console.log('post',this.postData);
 
@@ -160,7 +164,8 @@ new Vue({
                         that.pageData = res;
                         //console.log('ok',res);
                     });
-                
+
+                this.postData = {};
             }, err => {
               
                 });
@@ -168,14 +173,20 @@ new Vue({
 
     },
     created() {
-        this.postData.subs = [];
-        this.postData.uid = 'hello';
+      
     },
     mounted() {
         get_topic('2166554f-14f9-43ad-ae2b-cd9f59e065bf',
             res => {
+                console.log('res',res);
+                for (var value of res.Subjects) {
+                    for (var opt of value.Options) {
+                        opt.avtive=false;
+                    }
+                }
                 this.pageData = res;
                 console.log(res);
+                
             });
 
     }

@@ -16,84 +16,82 @@
 </head>
 <body>
     <div id="app">
-        <div>
-            <div class='title'>
-                <!-- <img src='../img/austrlia.jpg' class='map'></img> -->
-                <div class='dxtitle'>{{pageData.Title}}</div>
+        <div class='title'>
+            <!-- <img src='../img/austrlia.jpg' class='map'></img> -->
+            <div class='dxtitle'>{{pageData.Title}}</div>
+        </div>
+
+
+        <div class='pandaContainer'>
+            <div class='pandatitle'>
+                <div>{{pageData.SubTitle}}</div>
             </div>
-
-
-            <div class='pandaContainer'>
-                <div class='pandatitle'>
-                    <div>{{pageData.SubTitle}}</div>
-                </div>
-                <img src='./Content/Image/dxm.jpg' class='panda' />
-                <div class='opera'>
-                    <div class='content'>
-                        {{pageData.Content}}
-                        <div class='openread'>
-                            <!-- <div class='open'>展开阅读</div> -->
-                        </div>
+            <img src='./Content/Image/dxm.jpg' class='panda' />
+            <div class='opera'>
+                <div class='content'>
+                    {{pageData.Content}}
+                    <div class='openread'>
+                        <!-- <div class='open'>展开阅读</div> -->
                     </div>
-                </div>
-                <div class='heartContainer'>
-                    <div class='heartArea'>
-                        <div>
-                            <img src='./Content/Image/heart.png' class='heart' />
-                        </div>
-                        <div class='heartCount'>{{pageData.Likes}}</div>
-                    </div>
-                    <!--<img src='./Content/Image/unsupport.png' class='support' />-->
-                    <img src='./Content/Image/unsupport.png' class='support' v-on:click="like(pageData.Id)" />
-
                 </div>
             </div>
-
-                <div class='prime' v-for="p in pageData.Subjects">
-                    <div class='primetitle'>
-                        <div>{{p.Title}}</div>
+            <div class='heartContainer'>
+                <div class='heartArea'>
+                    <div>
+                        <img src='./Content/Image/heart.png' class='heart' />
                     </div>
-                    <img src='./Content/Image/dx.png' class='panda' />
-                    <div class='vsarea'>
-                        <img src='Content/Image/vs.png' class='vs' />
-                    </div>
-                    <div class='people' >
-                        <div class='primeone' v-for="cell in p.Options">
-                            <div class='nick' v-if="cell.ReferenceType==1">{{cell.Reference.Name}}</div>
-                            <div class='nick' v-else>{{cell.Title}}</div>
-
-                            <div class='introduce' v-if="cell.ReferenceType==1"> {{cell.Reference.Title}}</div>
-                            <div class='introduce' v-else>{{cell.Order}}</div>
-                            <div class='ticket'>{{cell.Votes}}</div>
-                            <img class="btnSupp" src="Content/Image/unsupport.png" v-on:click="support(cell,p.Id)" />
-
-                            <!-- <img  src='../img/unsupport.png' class='primeSupp' bindtap='support'></img> -->
-                        </div>
-                    </div>
-
+                    <div class='heartCount'>{{pageData.Likes}}</div>
                 </div>
+                <!--<img src='./Content/Image/unsupport.png' class='support' />-->
+                <img src='./Content/Image/unsupport.png' class='support' v-on:click="like(pageData.Id)" />
 
-                <div class='buttonarea'>
-                    <button class='button' v-on:click="post">确认投票</button>
+            </div>
+        </div>
+
+        <div class='prime' v-for="p in pageData.Subjects">
+            <div class='primetitle'>
+                <div>{{p.Title}}</div>
+            </div>
+            <img src='./Content/Image/dx.png' class='panda' />
+            <div class='vsarea'>
+                <img src='Content/Image/vs.png' class='vs' />
+            </div>
+            <div class='people'>
+                <div class='primeone' v-for="cell in p.Options">
+                    <div class='nick' v-if="cell.ReferenceType==1">{{cell.Reference.Name}}</div>
+                    <div class='nick' v-else>{{cell.Title}}</div>
+
+                    <div class='introduce' v-if="cell.ReferenceType==1"> {{cell.Reference.Title}}</div>
+                    <div class='introduce' v-else>{{cell.Order}}</div>
+                    <div class='ticket'>{{cell.Votes}}</div>
+                    <img class="btnSupp" src="Content/Image/unsupport.png" v-on:click="support(cell,p.Id)"  />
+                    <img class="btnSupp" src="Content/Image/support.png" v-on:click="support(cell,p.Id)"   />
+
+                    <!-- <img  src='../img/unsupport.png' class='primeSupp' bindtap='support'></img> -->
                 </div>
-
-            <div class='foot'>
-
-                <div class='one'>
-                    <button class='btnshare'>+</button>
-                    <div class='rank'>分享大使</div>
-                </div>
-                <!--<scroll-div scroll-x class='scroll-header'>
-                    <div class='two'>
-                        <img src='../img/dxm.jpg' class='dxm' />
-                        <div class='rank'>461</div>
-                    </div>
-                </scroll-div>-->
             </div>
 
+        </div>
+
+        <div class='buttonarea'>
+            <button class='button' v-on:click="post">确认投票</button>
+        </div>
+
+        <div class='foot'>
+            <div class='ele'>
+                <button class='btnshare'>+</button>
+                <div class='rank'>分享大使</div>
+            </div>
+
+            <div class='ele' v-for="p in item">
+                <img src='Content/Image/dxm.jpg' class='dxm' />
+                <div class='rank'>461</div>
+            </div>
+        </div>
 
 
-                <!-- <div class='news'>
+
+        <!-- <div class='news'>
           <div class='pandatitle'>
             <div>最新动态</div>
           </div>
@@ -104,7 +102,7 @@
             </div>
           </div>
         </div> -->
-                <!--<div class="modal-box" hidden='{{!showTip}}'>
+        <!--<div class="modal-box" hidden='{{!showTip}}'>
             <div class="modal-content">
                 <div class="content-title">微信授权</div>
                 <div class='logoArea'>
@@ -124,7 +122,8 @@
             </div>
         </div>-->
 
-        </div>
+
+
     </div>
 </body>
 <script src="index.js"></script>
