@@ -44,8 +44,8 @@
                     <div class='heartCount'>{{pageData.Likes}}</div>
                 </div>
                 <!--<img src='./Content/Image/unsupport.png' class='support' />-->
+                <img src='./Content/Image/support.png' class='support' v-on:click="like(pageData.Id)" v-if="islike" />
                 <img src='./Content/Image/unsupport.png' class='support' v-on:click="like(pageData.Id)" />
-
             </div>
         </div>
 
@@ -65,8 +65,8 @@
                     <div class='introduce' v-if="cell.ReferenceType==1"> {{cell.Reference.Title}}</div>
                     <div class='introduce' v-else>{{cell.Order}}</div>
                     <div class='ticket'>{{cell.Votes}}</div>
-                    <img class="btnSupp" src="Content/Image/unsupport.png" v-on:click="support(cell,p.Id)"  />
-                    <img class="btnSupp" src="Content/Image/support.png" v-on:click="support(cell,p.Id)"   />
+                    <img class="btnSupp" src="Content/Image/support.png" v-on:click="support(cell,p.Id)" v-if="cell.active" />
+                    <img class="btnSupp" src="Content/Image/unsupport.png" v-on:click="support(cell,p.Id)" v-else />
 
                     <!-- <img  src='../img/unsupport.png' class='primeSupp' bindtap='support'></img> -->
                 </div>
@@ -92,40 +92,41 @@
 
 
 
+
         <!-- <div class='news'>
-          <div class='pandatitle'>
-            <div>最新动态</div>
-          </div>
-          <img src='{{pageData.Media}}' class='panda' wx:if='{{pageData.MediaType==1}}' />
-          <div class='opera'>
-            <div class='content'>
-              {{pageData.Content}}
-            </div>
-          </div>
-        </div> -->
+      <div class='pandatitle'>
+        <div>最新动态</div>
+      </div>
+      <img src='{{pageData.Media}}' class='panda' wx:if='{{pageData.MediaType==1}}' />
+      <div class='opera'>
+        <div class='content'>
+          {{pageData.Content}}
+        </div>
+      </div>
+    </div> -->
         <!--<div class="modal-box" hidden='{{!showTip}}'>
-            <div class="modal-content">
-                <div class="content-title">微信授权</div>
-                <div class='logoArea'>
-                    <img src='../img/logo.png' class='logo' />
-                </div>
-                <div class="content-div">
-                    为了投票结果的严肃性，天天热点传媒需要您的授权
+        <div class="modal-content">
+            <div class="content-title">微信授权</div>
+            <div class='logoArea'>
+                <img src='../img/logo.png' class='logo' />
+            </div>
+            <div class="content-div">
+                为了投票结果的严肃性，天天热点传媒需要您的授权
+            </div>
+        </div>
+        <div class="modal-btns">
+            <div class="weui-flex">
+                <div class="weui-flex__item">
+                    <button class="dialog-btn confirm" open-type="getUserInfo" bindgetuserinfo="getUserInfo">开始授权</button>
+                    <button class="dialog-btn exit" bindtap='exit'>取消</button>
                 </div>
             </div>
-            <div class="modal-btns">
-                <div class="weui-flex">
-                    <div class="weui-flex__item">
-                        <button class="dialog-btn confirm" open-type="getUserInfo" bindgetuserinfo="getUserInfo">开始授权</button>
-                        <button class="dialog-btn exit" bindtap='exit'>取消</button>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-
-
+        </div>
+    </div>-->
 
     </div>
+
+
 </body>
 <script src="index.js"></script>
 </html>

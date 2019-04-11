@@ -157,30 +157,36 @@ new Vue({
         return {
             pageData: {},
             postData: {},
-            item:[1,2,3,4,5]
-            
+            item: [1, 2, 3, 4, 5],
+            islike:false
         }
     },
     methods: {
         support(cell, sId) {
             this.postData.subs = [];
             this.postData.uid = 'hello';
-            this.isactive = true;
-            if (this.postData.subs.find(p => p.id == sId)) {
-                let sub = this.postData.subs.find(p => p.id == sId)
-                sub.ops = [{
-                    id: cell.Id,
-                    order: cell.Order
-                }];
-            } else {
-                this.postData.subs.push({
-                    id: sId,
-                    ops: [{
-                        id: cell.Id,
-                        order: cell.Order,
-                    }]
-                })
-            }
+
+            
+
+          
+            //console.log('item',item);
+           
+
+            //if (this.postData.subs.find(p => p.id == sId)) {
+            //    let sub = this.postData.subs.find(p => p.id == sId)
+            //    sub.ops = [{
+            //        id: cell.Id,
+            //        order: cell.Order
+            //    }];
+            //} else {
+            //    this.postData.subs.push({
+            //        id: sId,
+            //        ops: [{
+            //            id: cell.Id,
+            //            order: cell.Order,
+            //        }]
+            //    })
+            //}
             
 
             //console.log('post',this.postData);
@@ -188,6 +194,7 @@ new Vue({
 
         },
         like(Id) {
+            this.islike=true
             like_topic(Id, res => {
                 weui.toast("支持成功");
             })
@@ -217,7 +224,7 @@ new Vue({
                 console.log('res',res);
                 for (var value of res.Subjects) {
                     for (var opt of value.Options) {
-                        opt.avtive=false;
+                        opt.active=false;
                     }
                 }
                 this.pageData = res;
