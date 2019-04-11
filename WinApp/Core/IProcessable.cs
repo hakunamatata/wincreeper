@@ -10,9 +10,11 @@ namespace WinApp.Core
     public class ProcessorEventArgs
     {
         public int Progress { get; set; } = 0;
+        public object Output { get; set; }
         public ProcessorEventArgs(int progress, object output)
         {
             Progress = progress;
+            Output = output;
         }
     }
     public interface IProcessable

@@ -22,8 +22,11 @@ namespace WinApp.Components
         private void ConfigForm_Load(object sender, EventArgs e)
         {
             textBoxLocalRootDirectory.Text = Configuration.AppSettings.SaveConfig.RootLocalDirectory;
-            textBoxRemoteDirectory.Text = Configuration.AppSettings.SaveConfig.RemoteDirectory;
+            textBoxRemoteDirectory.Text = Configuration.AppSettings.SaveConfig.RemotePath;
             checkBoxIndividule.Checked = Configuration.AppSettings.SaveConfig.LocalIndividulelyDirecotry;
+            textBoxShareApi.Text = Configuration.AppSettings.HostShareApi;
+            textBoxConnection.Text = Configuration.ConnectionString;
+            textBoxUpload.Text = Configuration.AppSettings.SaveConfig.UploadAPI;
         }
 
         private void linkLabelBrowse_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -40,6 +43,30 @@ namespace WinApp.Components
         {
             Configuration.UpdateConfig();
             DialogResult = DialogResult.OK;
+        }
+
+        private void textBoxShareApi_TextChanged(object sender, EventArgs e)
+        {
+            var box = sender as TextBox;
+            Configuration.AppSettings.HostShareApi = box.Text.Trim();
+        }
+
+        private void textBoxConnection_TextChanged(object sender, EventArgs e)
+        {
+            var box = sender as TextBox;
+            Configuration.ConnectionString = box.Text.Trim();
+        }
+
+        private void textBoxRemoteDirectory_TextChanged(object sender, EventArgs e)
+        {
+            var box = sender as TextBox;
+            Configuration.AppSettings.SaveConfig.RemotePath = box.Text.Trim();
+        }
+
+        private void textBoxUpload_TextChanged(object sender, EventArgs e)
+        {
+            var box = sender as TextBox;
+            Configuration.AppSettings.SaveConfig.UploadAPI = box.Text.Trim();
         }
     }
 }

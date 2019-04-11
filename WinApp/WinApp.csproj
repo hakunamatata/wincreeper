@@ -19,6 +19,21 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -69,6 +84,12 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.60.1\lib\net451\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.1.0.145, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.1.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -101,11 +122,23 @@
     <Compile Include="Components\ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\ImageGallary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\ImageGallary.Designer.cs">
+      <DependentUpon>ImageGallary.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\QrcodeDisplayForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Components\QrcodeDisplayForm.Designer.cs">
       <DependentUpon>QrcodeDisplayForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\ShareConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\ShareConfigForm.Designer.cs">
+      <DependentUpon>ShareConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\AppConfigureation.cs" />
     <Compile Include="Core\AppMenuBootstrap.cs" />
@@ -113,6 +146,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Core\CoreExtentions.cs" />
+    <Compile Include="Core\Database.cs" />
+    <Compile Include="Core\Handlers\PageUploadHandler.cs" />
     <Compile Include="Core\Handlers\TagResolve\ImageTag.cs" />
     <Compile Include="Core\Handlers\TagResolve\IResourceTag.cs" />
     <Compile Include="Core\Handlers\ResponsedResource\ImageSaveHandler.cs" />
@@ -128,7 +163,9 @@
     <Compile Include="Core\Handlers\PageDownloadHandler.cs" />
     <Compile Include="Core\Handlers\TagResolve\ScriptTag.cs" />
     <Compile Include="Core\Handlers\TagResolve\TagResolve.cs" />
+    <Compile Include="Core\ShareModule\Share.cs" />
     <Compile Include="Core\Utlis.cs" />
+    <Compile Include="Core\ZipHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,8 +182,14 @@
     <EmbeddedResource Include="Components\ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Components\ImageGallary.resx">
+      <DependentUpon>ImageGallary.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\QrcodeDisplayForm.resx">
       <DependentUpon>QrcodeDisplayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\ShareConfigForm.resx">
+      <DependentUpon>ShareConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -161,6 +204,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.json" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -174,9 +218,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

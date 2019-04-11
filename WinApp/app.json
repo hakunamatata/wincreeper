@@ -1,0 +1,14 @@
+{
+  "AppSettings": {
+    "Recent": [],
+    "SaveConfig": {
+      "RootLocalDirectory": "C:\\WechatSeek",
+      "LocalIndividulelyDirecotry": false,
+      "RemotePath": "http://wxwu88.com/static/pages",
+      "UploadAPI": "http://wxwu88.com/upload/pages"
+    },
+    "WechatResourceDomain": [ "https://mmbiz.qpic.cn", "https://mmbiz.qpic.cn", "https://mmbiz.qpic.cn", "https://mmbiz.qpic.cn", "https://mmbiz.qpic.cn", "https://mmbiz.qpic.cn", "https://mmbiz.qpic.cn", "https://mmbiz.qpic.cn" ],
+    "HostShareApi": "http://wxwu88.com/wrap?uid={ID}"
+  },
+  "ConnectionString": "Server=vmh20798.hosting24.com.au;Initial Catalog=wow002; UID=sa; PWD=QazWsx123#@!"
+}

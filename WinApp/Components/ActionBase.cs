@@ -52,7 +52,7 @@ namespace WinApp.Components
 
         protected virtual void OnUpdate(object sender, ProcessorEventArgs e)
         {
-
+            if (e == null) return;
         }
 
         protected virtual void OnStart(object sender, ProcessorEventArgs e)

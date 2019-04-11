@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="jquery.js"></script>
+    <script>
+        function vote() {
+            var raw = $("#txtVote").text();
+            $.post("http://localhost:56988/vote/topic/2166554f-14f9-43ad-ae2b-cd9f59e065bf", JSON.parse(raw), (res) => {
+                conosle.log(res);
+            });
+        }
+
+        function topic(id) {
+            $.get("http://localhost:56988/vote/topic/" + id, (res) => {
+                conosle.log(res);
+            });
+        }
+    </script>
+</head>
+<body>
+    <button onclick="topic()">Vote</button> <br /><br />
+    <textarea id="txtVote">{"uid":"wxuser","subs":[{"id":"56096bfb-3485-42c5-9221-0cde8a42230f","ops":[{"id":"375f8bff-e83d-490a-b8a2-3a6412c458b9","order":99}]}]}</textarea>
+    <button onclick="topic('2166554f-14f9-43ad-ae2b-cd9f59e065bf')">Vote</button>
+</body>
+</html>

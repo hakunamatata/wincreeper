@@ -26,14 +26,8 @@ namespace WinApp.Core
                 }
             }
         }
-        public string ApplicationName { get; set; } = "Wechat Content Helper";
-#if (DEBUG)
-        public string Version { get; set; } = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-#else
-        public string Version { get; set; } = System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-#endif
         public Settings AppSettings { get; set; } = new Settings();
-
+        public string ConnectionString { get; set; } = "Server=trans.pub;Initial Catalog=wow002; UID=sa; PWD=sa@123";
         public void UpdateConfig()
         {
             File.WriteAllText(configFile, JsonConvert.SerializeObject(this));
@@ -46,7 +40,9 @@ namespace WinApp.Core
 
         public DownloadSeting SaveConfig { get; set; } = new DownloadSeting();
 
-        public List<string> WechatResourceDomain { get; set; } = new List<string>() { "https://mmbiz.qpic.cn"};
+        public List<string> WechatResourceDomain { get; set; } = new List<string>() { "https://mmbiz.qpic.cn" };
+
+        public string HostShareApi { get; set; } = "http://wxwu88.com/wrap?uid={ID}";
     }
 
     public class RecentSetting
@@ -64,7 +60,8 @@ namespace WinApp.Core
     {
         public string RootLocalDirectory { get; set; } = "";
         public bool LocalIndividulelyDirecotry { get; set; } = false;
-        public string RemoteDirectory { get; set; } = "";
+        public string RemotePath { get; set; } = "http://127.0.0.1:56373/static/pages";
+        public string UploadAPI { get; set; } = "http://127.0.0.1:56373/upload/pages";
     }
 
 }

@@ -51,10 +51,6 @@ namespace WinApp
             textBoxUrl.AutoSize = false;
             textBoxUrl.KeyPress += TextBoxUrl_KeyPress;
 
-            AppMenuBootstrap.Bootstrap(menuStrip);
-            AppMenuBootstrap.PageSave.Click += PageSave_Click;
-            AppMenuBootstrap.PageShare.Click += PageShare_Click;
-            AppMenuBootstrap.SettingConfig.Click += SettingConfig_Click;
         }
 
 
@@ -88,44 +84,6 @@ namespace WinApp
                 Go(textbox.Text);
             }
         }
-
-        #region ===== 菜单点击事件 =====
-        /// <summary>
-        /// 分享菜单事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PageShare_Click(object sender, EventArgs e)
-        {
-            var qrForm = new QrcodeDisplayForm(Utlis.GenerateQRCode(textBoxUrl.Text.Trim()));
-            qrForm.ShowDialog();
-        }
-
-        /// <summary>
-        /// 保存菜单点击事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PageSave_Click(object sender, EventArgs e)
-        {
-            var actionForm = new ActionBase();
-            var downloadHandler = new PageDownloadHandler(actionForm.ProgressBar);
-            actionForm.Process(downloadHandler, async () => { await downloadHandler.DownloadPageAsync(Page); });
-            var rootPath = $"{configuration.AppSettings.SaveConfig.RootLocalDirectory}\\{Page.Id}";
-            Process.Start(rootPath);
-        }
-
-
-        /// <summary>
-        /// 配置菜单点击事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SettingConfig_Click(object sender, EventArgs e)
-        {
-            new ConfigForm().ShowDialog();
-        }
-        #endregion
 
         /// <summary>
         /// 跳转到某一个网页,并且生成该网页的资源与实体
@@ -211,16 +169,79 @@ namespace WinApp
                     res.ContentType = e.Response.Headers["Content-Type"];
                     if (!ignoreContentType.Contains(res.ContentType))
                         Page.Resources.Add(res);
-                    Invoke(new Action(async () => {
-                        if (progressBar.Value + 1 < 99) {
-                            Page.RawHtml = (await e.Frame.GetSourceAsync()).Replace("&amp;", "&");
-                            progressBarUpdate(progressBar.Value + 1);
-                        }
-                    }));
+                    if (IsHandleCreated)
+                        Invoke(new Action(async () => {
+                            if (progressBar.Value + 1 < 99) {
+                                Page.RawHtml = (await e.Frame.GetSourceAsync()).Replace("&amp;", "&");
+                                progressBarUpdate(progressBar.Value + 1);
+                            }
+                        }));
                 }
             };
 
         }
+        /// <summary>
+        /// Menu: Quit
+        /// 退出程序
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
 
+        /// <summary>
+        /// Menu: Upload
+        /// 上传网页
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uploadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //var actionForm = new ActionBase();
+            //var uploadHandler = new PageUploadHandler(actionForm.ProgressBar);
+            //actionForm.Process(uploadHandler, () => { uploadHandler.Upload(Page.DownloadPath); });
+        }
+
+        /// <summary>
+        /// 分享并上传网页
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void shareToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var shareConfigForm = new ShareConfigForm(Page)) {
+                if (shareConfigForm.ShowDialog() == DialogResult.OK) {
+                    Page.Share = shareConfigForm.Share;
+                }
+            }
+            var actionForm = new ActionBase();
+            var uploadHandler = new PageUploadHandler(actionForm.ProgressBar);
+            actionForm.Process(uploadHandler, () => { uploadHandler.Upload(Page.DownloadPath); });
+            var qrCode = Page.Share.ShareInWechat();
+            var qrForm = new QrcodeDisplayForm(qrCode);
+            qrForm.ShowDialog();
+        }
+
+        private void preferenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ConfigForm().ShowDialog();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var actionForm = new ActionBase();
+            var downloadHandler = new PageDownloadHandler(actionForm.ProgressBar);
+            actionForm.Process(downloadHandler, async () => { await downloadHandler.DownloadPageAsync(Page); });
+            var rootPath = $"{configuration.AppSettings.SaveConfig.RootLocalDirectory}\\{Page.Id}";
+            Page.DownloadPath = rootPath;
+            Process.Start(rootPath);
+        }
+
+        private void manuallToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("1. 输入网页地址, 按回车跳转或点击Go按钮.\r\n2. 点击\"File->Save\"将网页保存至本地\r\n3. 点击\"File->Share\"将下载的网页压缩打包,上传至服务器,生成微信分享二维码;服务器会自行解压生成网页.", "提示");
+        }
     }
 }
