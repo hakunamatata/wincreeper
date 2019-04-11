@@ -177,8 +177,8 @@ new Vue({
         return {
             pageData: {},
             postData: {},
-            item: [1, 2, 3, 4, 5]
-
+            item:[1,2,3,4,5]
+            
         }
     },
     methods: {
@@ -201,13 +201,14 @@ new Vue({
                     }]
                 })
             }
-
+            
 
             //console.log('post',this.postData);
 
 
         },
         like(Id) {
+            this.islike=true
             like_topic(Id, res => {
                 weui.toast("支持成功");
             })
@@ -237,7 +238,7 @@ new Vue({
                 console.log('res', res);
                 for (var value of res.Subjects) {
                     for (var opt of value.Options) {
-                        opt.avtive = false;
+                        opt.avtive=false;
                     }
                 }
                 this.pageData = res;
