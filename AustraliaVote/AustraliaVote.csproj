@@ -80,6 +80,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Image\austrlia.jpg" />
+    <Content Include="Content\Image\dx.png" />
+    <Content Include="Content\Image\dxm.jpg" />
+    <Content Include="Content\Image\heart.png" />
+    <Content Include="Content\Image\logo.png" />
+    <Content Include="Content\Image\party.png" />
+    <Content Include="Content\Image\support.png" />
+    <Content Include="Content\Image\unsupport.png" />
+    <Content Include="Content\Image\vs.png" />
     <Content Include="Content\index.css" />
     <Content Include="Content\js\vue.js" />
     <Content Include="Global.asax" />
@@ -107,7 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Image\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

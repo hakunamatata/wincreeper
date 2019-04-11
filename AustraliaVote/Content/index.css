@@ -1,122 +1,123 @@
-﻿page{
-  background-color: #222946;
+﻿body {
+    background-color: #222946;
+    padding: 0px;
+    margin: 0px;
 }
 .title{
    text-align: center;
-   height: 80rpx;
+   height: 40px;
    color: #fff;
-   line-height: 80rpx;
-   font-size: 36rpx;
+   line-height: 40px;
+   font-size: 13px;
    background-color: rgb(37, 105, 186);
    font-weight: 600;
 }
 .open{
-  font-size: 28rpx;
+  font-size: 14px;
   color: #999;
 }
 .map{
-   width: 50rpx;
-   height:50rpx;
+   width: 25px;
+   height:25px;
 }
-.openread{
-  float: right;
-  margin-right: 20rpx;
-  margin-top: 20rpx;
+.openread {
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
 }
 
-.content{
-  padding: 20rpx;
-  line-height: 50rpx;
-  text-indent: 0px;
-  font-size: 28rpx;
-  color: #666;
+.content {
+    padding: 10px;
+    line-height: 25px;
+    text-indent: 0px;
+    font-size: 14px;
+    color: #666;
 }
 .panda{
   display: block;
   width: 100%;
 }
-.pandatitle{
-  border-top-left-radius: 20rpx;
-  border-top-right-radius: 20rpx;
-  font-size: 40rpx;
-  text-align: center;
-  
-  height: 90rpx;
-  line-height: 90rpx;
-  color: white;
-  font-weight: 600;
-  background-color: rgb(84, 190, 94);
+.pandatitle {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: 20px;
+    text-align: center;
+    height: 45px;
+    line-height: 45px;
+    color: white;
+    font-weight: 600;
+    background-color: rgb(84, 190, 94);
 }
-.pandaContainer{
-   padding-bottom:20rpx; 
-   border-radius: 20rpx;
-   margin-left: 30rpx;
-   margin-right: 30rpx;
-   margin-top: 10rpx;
-   background-color: white;
+.pandaContainer {
+    padding-bottom: 10px;
+    border-radius: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 10px;
+    background-color: white;
 }
 
-.news{
-   padding-bottom:20rpx; 
-   border-radius: 20rpx;
-   margin-left: 30rpx;
-   margin-right: 30rpx;
-   margin-top: 10rpx;
-   background-color: white;
-   margin-bottom: 40rpx;
+.news {
+    padding-bottom: 10px;
+    border-radius: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 5px;
+    background-color: white;
+    margin-bottom: 20px;
 }
 .heart{
-  margin-top: 6rpx;
-  padding-left: 10rpx;
-  width: 48rpx;
-  height: 44rpx;
+  margin-top: 3px;
+  padding-left: 5px;
+  width: 24px;
+  height: 22px;
 }
-.heartContainer{
-   display: flex;
-   margin-top: 20rpx;
+.heartContainer {
+    display: flex;
+    margin-top: 10px;
 }
-.heartArea{
-  display: flex;
-  flex-direction: row;
-  margin-left: 30rpx;
-  background-color: rgb(84, 190, 94);
-  width: 240rpx;
-  font-weight: 400
+.heartArea {
+    display: flex;
+    flex-direction: row;
+    margin-left: 15px;
+    background-color: rgb(84, 190, 94);
+    width: 120px;
+    font-weight: 400
 }
 .heartCount{
   font-weight: 600;
-  font-size: 40rpx;
-  padding-left: 10rpx;
+  font-size: 20px;
+  padding-left: 5px;
   color: white;
 }
 .support{
   margin-left: 35%;
-  width: 160rpx;
-  height: 60rpx;
+  width: 80px;
+  height: 30px;
 }
 
-.prime{
-  background-color: white;
-  margin-left: 30rpx;
-  margin-right: 30rpx;
-  margin-top: 10rpx;
-  border-radius: 20rpx;
+.prime {
+    background-color: white;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 5px;
+    border-radius: 10px;
 }
-.primetitle{
-  text-align: center;
-  background-color: rgb(0, 191, 243);
-  border-top-left-radius: 20rpx;
-  border-top-right-radius: 20rpx;
-  font-size: 40rpx;
-  height: 90rpx;
-  line-height: 90rpx;
-  color: white;
-  font-weight: 600;
+.primetitle {
+    text-align: center;
+    background-color: rgb(0, 191, 243);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: 20px;
+    height: 45px;
+    line-height: 45px;
+    color: white;
+    font-weight: 600;
 }
 .primeSupp{
-   width: 160rpx;
-   height: 60rpx;
-   margin-bottom: 20rpx;
+   width: 80px;
+   height: 30px;
+   margin-bottom: 10px;
 }
 /* .primeunSupp{
    margin-bottom: 10px;
@@ -126,39 +127,39 @@
 .people{
  display: flex;
 }
-.primeone{
-  border-bottom-left-radius: 20rpx;
-  border-bottom-right-radius: 20rpx;
-  width: 50%;
-  text-align: center;
-  background-color: rgb(214, 226, 228);
+.primeone {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: 50%;
+    text-align: center;
+    background-color: rgb(214, 226, 228);
 }
 .primeone:nth-child(2n+1){
     background-color: rgb(159, 237, 251)
 }
-.nick{
-  padding-top: 40rpx;
-  padding-bottom: 20rpx;
-  font-size: 28rpx;
-  font-family: "黑体";
-  font-weight: bold;
+.nick {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-size: 14px;
+    font-family: "黑体";
+    font-weight: bold;
 }
-.introduce{
-  padding-bottom: 20rpx;
-  font-size: 24rpx;
-  color: rgb(123, 147, 154)
+.introduce {
+    padding-bottom: 10px;
+    font-size: 12px;
+    color: rgb(123, 147, 154)
 }
 
 .ticket{
-  margin-left: 80rpx;
+  margin-left: 40px;
   width: 55%;
-  margin-bottom: 20rpx;
+  margin-bottom: 10px;
   background-color: rgb(0, 145, 255);
   color: white;
 }
 .vs{
-  height: 180rpx;
-  width: 120rpx;
+  height: 90px;
+  width: 60px;
 }
 
 
@@ -169,70 +170,74 @@
   position: absolute;
   left: 42%;
 }
-.party{
-  text-align: center;
-  background-color: rgb(37, 105, 168);
-  border-top-left-radius: 20rpx;
-  border-top-right-radius: 20rpx;
-  font-size: 40rpx;
-  height: 90rpx;
-  line-height: 90rpx;
-  color: white;
-  font-weight: 600;
+.party {
+    text-align: center;
+    background-color: rgb(37, 105, 168);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: 20px;
+    height: 45px;
+    line-height: 45px;
+    color: white;
+    font-weight: 600;
 }
 .partyintro{
-   padding-top: 40rpx;
-   padding-bottom: 20rpx;
+   padding-top: 20px;
+   padding-bottom: 10px;
    font-weight: 500;
-   font-size: 28rpx;
+   font-size: 14px;
    color: rgb(0, 145, 255);
    text-decoration: underline;
 }
-.buttonarea{
-   margin-top: 30rpx;
-   margin-bottom: 30rpx;
+.buttonarea {
+    text-align:center;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 .button{
+  height:40px;
+  border-radius:5px;
+  border:none;
   background-color: rgb(247, 181, 0);
-  width: 320rpx;
+  width: 160px;
   color: white;
 }
 .btnSupp{
-  line-height: 60rpx;
-  width: 160rpx;
-  height: 60rpx;
+  border:none;
+  line-height: 30px;
+  width: 80px;
+  height: 30px;
   color: #fff;
-  border-radius: 24rpx;
+  border-radius: 12px;
   background-color: rgb(109, 114, 120);
-  margin-bottom: 20rpx;
-}
-.btnSupp:hover{
-  line-height: 60rpx;
-  width: 160rpx;
-  height: 60rpx;
-  color: #fff;
-  border-radius: 24rpx;
-  background-color: rgb(19, 30, 133);
   margin-bottom: 10px;
 }
-.foot{
-  overflow: hidden;
-  display: flex;
-  margin-left: 30rpx;
-  margin-right: 30rpx;
-  height: 300rpx;
-  background-color: white;
-
-  border-radius: 10px;
+    .btnSupp:hover {
+        line-height: 30px;
+        width: 80px;
+        height: 30px;
+        color: #fff;
+        border-radius: 12px;
+        background-color: rgb(19, 30, 133);
+        margin-bottom: 10px;
+    }
+.foot {
+    overflow: hidden;
+    display: flex;
+    margin-left: 15px;
+    margin-right: 15px;
+    height: 150px;
+    background-color: white;
+    border-radius: 10px;
 }
-.circleone{
-  font-size: 90rpx;
-  color:white;
-  text-align: center;
-  background-color: rgb(59, 16, 253);
-  border-radius: 50%;
-  width: 140rpx;
-  height: 140rpx;
+.circleone {
+    font-size: 45px;
+    color: white;
+    text-align: center;
+    background-color: rgb(59, 16, 253);
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
 }
 /* .circleone image{
   width: 80rpx;
@@ -240,42 +245,43 @@
 } */
 .rank{
   color: #999;
-  font-size: 28rpx;
+  font-size: 14px;
 }
 
-.circletwo{
-  text-align: center;
-  background-color: rgb(59, 16, 253);
-  border-radius: 50%;
-  width: 140rpx;
-  height: 140rpx;
+.circletwo {
+    text-align: center;
+    background-color: rgb(59, 16, 253);
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
 }
-.dxm{
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 50%;
+.dxm {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
 }
 .one{
-  margin-top: 50rpx;
-  margin-left: 40rpx;
+  margin-top: 25px;
+  margin-left: 20px;
   text-align: center;
-  height: 200rpx;
+  height: 100px;
 }
-.two{
-  margin-top: 50rpx;
-  margin-left: 40rpx;
-  display: inline-block; 
-  text-align: center;
-  height: 200rpx;
+.two {
+    margin-top: 25px;
+    margin-left: 20px;
+    display: inline-block;
+    text-align: center;
+    height: 100px;
 }
-.btnshare{
-  color:white;
-  font-size: 45rpx;  
-  text-align: center;
-  border-radius: 50%;
-  width: 120rpx;
-  height: 120rpx;
-  background-color:rgb(59, 16, 253);
+.btnshare {
+    border:none;
+    color: white;
+    font-size: 23px;
+    text-align: center;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background-color: rgb(59, 16, 253);
 }
 
 
@@ -283,14 +289,14 @@
 .modal-box {
   position: fixed;
   background: rgba(0, 0, 0, 0.4);
-  top: 0rpx;
+  top: 0px;
   width: 100%;
   height: 100%;
 }
  
 .modal-content {
   background: #fff;
-  width: 600rpx;
+  width: 300px;
   margin: 40% auto 0;
   justify-content: center;
   align-items: center;
@@ -298,27 +304,27 @@
 }
  
 .content-title {
-  height: 100rpx;
+  height: 50px;
   text-align: center;
   font-size: 1.2rem;
-  padding-top: 10rpx;
+  padding-top: 5px;
 }
  
  .logoArea{
    text-align: center;
  }
-.logo{
-  border-radius: 50%;
-  width: 120rpx;
-  height: 120rpx;
+.logo {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
 }
 .content-text {
-  font-size: 30rpx;
-  padding: 20rpx 50rpx 50rpx;
+    font-size: 15px;
+    padding: 10px 25px 25px;
 }
  
 .modal-btns {
-  width: 600rpx;
+  width: 300px;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
@@ -327,7 +333,7 @@
 .dialog-btn {
   border-radius: 0;
   background: #fff;
-  height: 100rpx;
+  height: 50px;
   width: 100%;
 }
  
