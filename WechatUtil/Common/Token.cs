@@ -52,8 +52,8 @@ namespace WechatUtil.Common
         {
             //string strulr = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}";
             string strurl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}";
-            string corpID = AppSetting.Current.WechatAppId; //公众号appId
-            string Secret = AppSetting.Current.WechatAppSecret;//公众号appSecret
+            string corpID = ConfigurationManager.AppSettings["appId"]; //公众号appId
+            string Secret = ConfigurationManager.AppSettings["secret"];//公众号appSecret
 
             HttpHelper http = new HttpHelper();
 

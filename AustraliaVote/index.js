@@ -1,9 +1,23 @@
-﻿/* Vue plugin config */
-Vue.prototype.$http = axios;
-Vue.prototype.wx = weui;
-
-/* API */
+﻿/* API Server*/
 const server = 'http://localhost:56988/';
+/**
+ * 获取服务器中的微信页面配置参数
+ * @param {any} success
+ * @param {any} error
+ */
+function get_wxconfig(success, error) {
+    axios.get(server + 'sns/wxconf?url=' + location.href)
+        .then(res => {
+            if (res.status == 200) {
+                if (success) success(res.data);
+            }
+            else {
+                if (error) error(res);
+            }
+        })
+        .catch(error);
+
+}
 /**
  * 获取投票主题的信息
  * @param {String} topicId 主题ID
@@ -22,6 +36,7 @@ function get_topic(topicId, success, error) {
         })
         .catch(error);
 };
+
 
 /**
  * 对主题进行投票
@@ -76,6 +91,29 @@ function like_topic(topicId, success, error) {
         .catch(error);
 }
 
+/*
+ * 获取微信配置以及微信页面初始化
+**/
+get_wxconfig(res => {
+    wx.config({
+        debug: false,
+        appId: res.appid,
+        timestamp: res.timestamp,
+        nonceStr: res.nonce,
+        signature: res.signature,
+        jsApiList: ['checkJsApi', 'onMenuShareTimeline', 'onMenuShareAppMessage']
+    });
+}, err => {
+    console.log('微信配置获取失败: ' + err);
+})
+
+wx.ready(() => {
+    console.log('微信准备就绪');
+    Vue.prototype.wx = wx;
+});
+
+/* Vue plugin config */
+Vue.prototype.$http = axios;
 
 new Vue({
     el: '#app',

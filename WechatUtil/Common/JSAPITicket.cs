@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WechatUtil.Common.Comm
+namespace WechatUtil.Common
 {
     public class JSAPITicket
     {
