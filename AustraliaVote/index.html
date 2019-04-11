@@ -17,19 +17,18 @@
         <div>
             <div class='title'>
                 <!-- <img src='../img/austrlia.jpg' class='map'></img> -->
-                <div class='dxtitle'>澳州大选,有您来选</div>
+                <div class='dxtitle'>{{pageData.Title}}</div>
             </div>
 
 
             <div class='pandaContainer'>
                 <div class='pandatitle'>
-                    <div>守护澳洲大熊猫夫妇</div>
+                    <div>{{pageData.SubTitle}}</div>
                 </div>
                 <img src='./Content/Image/dxm.jpg' class='panda' />
                 <div class='opera'>
                     <div class='content'>
-                        澳洲两大政党之争，难道我们的大熊猫要沦落为政治斗争的牺牲品吗？“熊猫政治“该停止了！让我们集体团结发声，
-                        聚华人之力量，为Wang Wang和Fu Ni的居留权做主！请投上您支持的一票！
+                        {{pageData.Content}}
                         <div class='openread'>
                             <!-- <div class='open'>展开阅读</div> -->
                         </div>
@@ -40,30 +39,31 @@
                         <div>
                             <img src='./Content/Image/heart.png' class='heart' />
                         </div>
-                        <div class='heartCount'>971</div>
+                        <div class='heartCount'>{{pageData.Likes}}</div>
                     </div>
-                    <img src='./Content/Image/support.png' class='support' />
                     <!--<img src='./Content/Image/unsupport.png' class='support' />-->
+                    <img src='./Content/Image/unsupport.png' class='support' v-on:click="like(pageData.Id)" />
+
                 </div>
             </div>
 
-            <form>
-                <div class='prime'>
+                <div class='prime' v-for="p in pageData.Subjects">
                     <div class='primetitle'>
-                        <div>国家首相有您来选</div>
+                        <div>{{p.Title}}</div>
                     </div>
                     <img src='./Content/Image/dx.png' class='panda' />
                     <div class='vsarea'>
                         <img src='Content/Image/vs.png' class='vs' />
                     </div>
-                    <div class='people'>
-                        <div class='primeone'>
-                            <div class='nick'>莫里森</div>
-                            <!--<div class='nick' ></div>-->
-                            <div class='introduce'> 澳州首相</div>
-                            <!--<div class='introduce' ></div>-->
-                            <div class='ticket'>150</div>
-                            <button class='btnSupp'>支持</button>
+                    <div class='people' >
+                        <div class='primeone' v-for="cell in p.Options">
+                            <div class='nick' v-if="cell.ReferenceType==1">{{cell.Reference.Name}}</div>
+                            <div class='nick' v-else>{{cell.Title}}</div>
+
+                            <div class='introduce' v-if="cell.ReferenceType==1"> {{cell.Reference.Title}}</div>
+                            <div class='introduce' v-else>{{cell.Order}}</div>
+                            <div class='ticket'>{{cell.Votes}}</div>
+                            <img class="btnSupp" src="Content/Image/unsupport.png" v-on:click="support(cell,p.Id)" />
 
                             <!-- <img  src='../img/unsupport.png' class='primeSupp' bindtap='support'></img> -->
                         </div>
@@ -72,9 +72,8 @@
                 </div>
 
                 <div class='buttonarea'>
-                    <button class='button'>确认投票</button>
+                    <button class='button' v-on:click="post">确认投票</button>
                 </div>
-            </form>
 
             <div class='foot'>
 

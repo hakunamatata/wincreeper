@@ -81,11 +81,62 @@ new Vue({
     el: '#app',
     data() {
         return {
+            pageData: {},
+            postData: {},
+            
         }
+    },
+    methods: {
+        support(cell, sId) {
+            if (this.postData.subs.find(p => p.id == sId)) {
+                let sub = this.postData.subs.find(p => p.id == sId)
+                sub.ops = [{
+                    id: cell.Id,
+                    order: cell.Order
+                }];
+            } else {
+                this.postData.subs.push({
+                    id: sId,
+                    ops: [{
+                        id: cell.Id,
+                        order: cell.Order,
+                    }]
+                })
+            }
+
+            //console.log('post',this.postData);
+
+
+        },
+        like(Id) {
+            like_topic(Id, res => {
+                weui.toast("支持成功");
+            })
+        },
+        post() {
+            var that = this;
+            vote_topic('2166554f-14f9-43ad-ae2b-cd9f59e065bf', that.postData, res => {
+                weui.toast("投票成功");
+                get_topic('2166554f-14f9-43ad-ae2b-cd9f59e065bf',
+                    res => {
+                        that.pageData = res;
+                        //console.log('ok',res);
+                    });
+                
+            }, err => {
+              
+                });
+        }
+
+    },
+    created() {
+        this.postData.subs = [];
+        this.postData.uid = 'hello';
     },
     mounted() {
         get_topic('2166554f-14f9-43ad-ae2b-cd9f59e065bf',
             res => {
+                this.pageData = res;
                 console.log(res);
             });
 
