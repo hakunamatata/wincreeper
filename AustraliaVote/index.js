@@ -91,10 +91,32 @@ function like_topic(topicId, success, error) {
         .catch(error);
 }
 
+//querymap: {
+//    // 主题编号
+//    topic: 'xxxxx-xxxx-xxxx-xxxx-xxxxxxxx';
+//    // 微信授权的 code
+//    code: 'xxxxx';
+//    // 来源微信openid
+//    from: '';
+//}
+
+/**
+ *  页面参数
+ */
+let query = location.search.charAt(0) == '?' ?
+    Qs.parse(location.search.substring(1)) :
+    {};
+
+
+
+let wxConfig = {};
 /*
  * 获取微信配置以及微信页面初始化
 **/
 get_wxconfig(res => {
+    console.log('微信初始化成功');
+    wxConfig = res;
+
     wx.config({
         debug: false,
         appId: res.appid,
@@ -103,8 +125,11 @@ get_wxconfig(res => {
         signature: res.signature,
         jsApiList: ['checkJsApi', 'onMenuShareTimeline', 'onMenuShareAppMessage']
     });
+    // 加载页面
+    pageLoad();
+
 }, err => {
-    console.log('微信配置获取失败: ' + err);
+    console.log('页面加载失败: ' + err);
 })
 
 wx.ready(() => {
@@ -115,13 +140,24 @@ wx.ready(() => {
 /* Vue plugin config */
 Vue.prototype.$http = axios;
 
+
+function pageLoad() {
+    if (query.code === '' || query.code == null) {
+        //console.log('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + wxConfig.appid + '&redirect_uri=' + encodeURIComponent(location.href) + '&response_type=code&scope=snsapi_base&state=requestingCallback#wechat_redirect');
+        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + wxConfig.appid + '&redirect_uri=' + encodeURIComponent(location.href) + '&response_type=code&scope=snsapi_base&state=requestingCallback#wechat_redirect';
+
+    }
+
+}
+
+
 new Vue({
     el: '#app',
     data() {
         return {
             pageData: {},
             postData: {},
-            item: [1, 2, 3, 4, 5],
+            
         }
     },
     methods: {
@@ -164,11 +200,10 @@ new Vue({
                         that.pageData = res;
                         //console.log('ok',res);
                     });
-
-                this.postData = {};
+                
             }, err => {
-              
-                });
+
+            });
         }
 
     },
@@ -186,7 +221,6 @@ new Vue({
                 }
                 this.pageData = res;
                 console.log(res);
-                
             });
 
     }
