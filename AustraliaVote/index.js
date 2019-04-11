@@ -7,10 +7,12 @@ const server = 'http://localhost:56988/';
 var get_topic = (topicId, callback, error) => {
     axios.get(server + 'vote/topic/' + topicId)
         .then(res => {
-            if (res.status == 200)
-                callback(res.data);
-            else
-                error(res);
+            if (res.status == 200) {
+                if (callback) callback(res.data);
+            }
+            else {
+                if (error) error(res);
+            }
         });
 
 }
@@ -21,6 +23,9 @@ new Vue({
         }
     },
     mounted() {
-        get_topic('2166554f-14f9-43ad-ae2b-cd9f59e065bf');
+        get_topic('2166554f-14f9-43ad-ae2b-cd9f59e065bf',
+            res => {
+                console.log(res);
+            });
     }
 });
