@@ -144,7 +144,7 @@ Vue.prototype.$http = axios;
 function pageLoad() {
     if (query.code === '' || query.code == null) {
         //console.log('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + wxConfig.appid + '&redirect_uri=' + encodeURIComponent(location.href) + '&response_type=code&scope=snsapi_base&state=requestingCallback#wechat_redirect');
-        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + wxConfig.appid + '&redirect_uri=' + encodeURIComponent(location.href) + '&response_type=code&scope=snsapi_base&state=requestingCallback#wechat_redirect';
+        //location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + wxConfig.appid + '&redirect_uri=' + encodeURIComponent(location.href) + '&response_type=code&scope=snsapi_base&state=requestingCallback#wechat_redirect';
 
     }
 
