@@ -21,7 +21,7 @@ function get_wxconfig(success, error) {
 /**
  * 获取投票主题的信息
  * @param {String} topicId 主题ID
- * @param {Function} callback 接口调用成功
+ * @param {Function} callback 接口调用成功    
  * @param {Function} error 接口调用失败
  */
 function get_topic(topicId, success, error) {
@@ -157,6 +157,7 @@ new Vue({
         return {
             pageData: {},
             postData: {},
+            item:[1,2,3,4,5]
             
         }
     },
