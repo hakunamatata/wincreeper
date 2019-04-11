@@ -23,26 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoteSocket", "VoteSocket\Vo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoteTest", "VoteTest\VoteTest.csproj", "{44CD95EA-18BF-42AE-AFE1-D59A22A94D8C}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "VoteClient", "VoteClient\", "{21279321-CE4D-4174-BD87-1490FDF693FF}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_57619"
-		Debug.AspNetCompiler.PhysicalPath = "VoteClient\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57619\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_57619"
-		Release.AspNetCompiler.PhysicalPath = "VoteClient\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57619\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "57619"
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,14 +103,6 @@ Global
 		{44CD95EA-18BF-42AE-AFE1-D59A22A94D8C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{44CD95EA-18BF-42AE-AFE1-D59A22A94D8C}.Release|x64.ActiveCfg = Release|Any CPU
 		{44CD95EA-18BF-42AE-AFE1-D59A22A94D8C}.Release|x64.Build.0 = Release|Any CPU
-		{21279321-CE4D-4174-BD87-1490FDF693FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21279321-CE4D-4174-BD87-1490FDF693FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21279321-CE4D-4174-BD87-1490FDF693FF}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{21279321-CE4D-4174-BD87-1490FDF693FF}.Debug|x64.Build.0 = Debug|Any CPU
-		{21279321-CE4D-4174-BD87-1490FDF693FF}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{21279321-CE4D-4174-BD87-1490FDF693FF}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{21279321-CE4D-4174-BD87-1490FDF693FF}.Release|x64.ActiveCfg = Debug|Any CPU
-		{21279321-CE4D-4174-BD87-1490FDF693FF}.Release|x64.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,7 +112,6 @@ Global
 		{962508FE-F3B9-4413-A242-D0C78728C12E} = {E1A5ABA7-EF5E-45F2-8ABA-A5B844284EFA}
 		{5061EBE9-883C-45B0-AF66-DCD9243C83F6} = {E1A5ABA7-EF5E-45F2-8ABA-A5B844284EFA}
 		{44CD95EA-18BF-42AE-AFE1-D59A22A94D8C} = {E1A5ABA7-EF5E-45F2-8ABA-A5B844284EFA}
-		{21279321-CE4D-4174-BD87-1490FDF693FF} = {E1A5ABA7-EF5E-45F2-8ABA-A5B844284EFA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3F78CC17-CF8A-4E65-BE85-0F337CA6CA0C}
