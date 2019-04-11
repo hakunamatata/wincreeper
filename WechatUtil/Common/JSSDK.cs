@@ -17,9 +17,9 @@ namespace WechatUtil.Common
                 appid = ConfigurationManager.AppSettings["appid"],
                 nonce = GetNonce(),
                 ticket = JSAPITicket.GetTicket(),
-                timespan = GetTimespan()
+                timestamp = GetTimestamp()
             };
-            config.signature = GetSignature(config.ticket, config.timespan, config.nonce, url);
+            config.signature = GetSignature(config.ticket, config.timestamp, config.nonce, url);
             return config;
         }
         public static string GetJSApiTicket()
@@ -32,7 +32,7 @@ namespace WechatUtil.Common
             return Cryptography.RandomString(16, RandomFormatter.Default);
         }
 
-        public static string GetTimespan()
+        public static string GetTimestamp()
         {
             return ((DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000).ToString();
         }
@@ -66,7 +66,7 @@ namespace WechatUtil.Common
         public string appid { get; set; }
         public string ticket { get; set; }
         public string nonce { get; set; }
-        public string timespan { get; set; }
+        public string timestamp { get; set; }
         public string signature { get; set; }
     }
 }
