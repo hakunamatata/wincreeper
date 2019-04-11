@@ -7,129 +7,15 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <script src="Content/js/vue.js"></script>
+    <script src="Content/js/axios.js"></script>
     <script src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script>
+    <link href="Content/css/vote.css" rel="stylesheet" />
 </head>
 <body>
     <div id="app">
-        <div>
-            <div class='title'>
-                <!-- <img src='../img/austrlia.jpg' class='map'></img> -->
-                <text class='dxtitle'>{{pageData.Title}}</text>
-            </div>
-
-
-            <div class='pandaContainer'>
-                <div class='pandatitle'>
-                    <text>{{pageData.SubTitle}}</text>
-                </div>
-                <img src='{{pageData.Media}}' class='panda' wx:if='{{pageData.MediaType==1}}'></img>
-                <video src='{{pageData.Media}}' class='panda' wx:if='{{pageData.MediaType==2}}'></video>
-                <div class='opera'>
-                    <div class='content'>
-                        {{pageData.Content}}
-                        <div class='openread'>
-                            <!-- <text class='open'>展开阅读</text> -->
-                        </div>
-                    </div>
-                </div>
-                <div class='heartContainer'>
-                    <div class='heartArea'>
-                        <div>
-                            <img src='../img/heart.png' class='heart'></img>
-                        </div>
-                        <text class='heartCount'>{{pageData.Likes}}</text>
-                    </div>
-                    <img src='../img/support.png' class='support' v-if='{{liked}}' />
-                    <img src='../img/unsupport.png' class='support' bindtap='like'/>
-                </div>
-            </div>
-
-            <form bindsubmit='formSubmit'>
-                <div class='prime' wx:for='{{pageData.Subjects}}' wx:key='{{index}}'>
-                    <div class='primetitle'>
-                        <text>{{item.Title}}</text>
-                    </div>
-                    <img src='{{item.Media}}' class='panda' />
-                    <div class='vsarea'>
-                        <img src='../img/vs.png' class='vs'></img>
-                    </div>
-                    <div class='people'>
-                        <div class='primeone' wx:for='{{item.Options}}' wx:for-item='cell' wx:key='{{index}}'>
-                            <div class='nick' wx:if='{{cell.ReferenceType==1}}'>{{cell.Reference.Name}}</div>
-                            <div class='nick' wx:else>{{cell.Title}}</div>
-                            <div class='introduce' wx:if='{{cell.ReferenceType==1}}'>{{cell.Reference.Title}}</div>
-                            <div class='introduce' wx:else>{{cell.Reference.Name}}介绍</div>
-                            <div class='ticket'>{{cell.Votes}}</div>
-                            <button class='btnSupp' data-sid='{{item.Id}}' data-ops='{{cell}}' bindtap='support'>支持</button>
-
-                            <!-- <img  src='../img/unsupport.png' class='primeSupp' bindtap='support'></img> -->
-                        </div>
-                    </div>
-
-                </div>
-                <official-account></official-account>
-                <div class='buttonarea'>
-                    <button class='button' form-type='submit'>确认投票</button>
-                </div>
-            </form>
-
-            <div class='foot'>
-
-                <div class='one'>
-                    <button open-type='share' class='btnshare'>+</button>
-                    <text class='rank'>分享大使</text>
-                </div>
-                <scroll-div scroll-x class='scroll-header'>
-                    <div class='two' wx:for='{{scroll}}' wx:key="{{index}}">
-                        <img src='../img/dxm.jpg' class='dxm'>
-                        </img>
-                        <div class='rank'>461</div>
-                    </div>
-                </scroll-div>
-            </div>
-
-            <!-- <div class='news'>
-          <div class='pandatitle'>
-            <text>最新动态</text>
-          </div>
-          <img src='{{pageData.Media}}' class='panda' wx:if='{{pageData.MediaType==1}}'></img>
-          <video src='{{pageData.Media}}' class='panda' wx:if='{{pageData.MediaType==2}}'></video>
-          <div class='opera'>
-            <div class='content'>
-              {{pageData.Content}}
-            </div>
-          </div>
-        </div> -->
-
-
-            <div class="modal-box" hidden='{{!showTip}}'>
-                <div class="modal-content">
-                    <div class="content-title">微信授权</div>
-                    <div class='logoArea'>
-                        <img src='../img/logo.png' class='logo'></img>
-                    </div>
-                    <div class="content-text">
-                        为了投票结果的严肃性，天天热点传媒需要您的授权
-                    </div>
-                </div>
-                <div class="modal-btns">
-                    <div class="weui-flex">
-                        <div class="weui-flex__item">
-                            <button class="dialog-btn confirm" open-type="getUserInfo" bindgetuserinfo="getUserInfo">开始授权</button>
-                            <button class="dialog-btn exit" bindtap='exit'>取消</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
 
     </div>
 </body>
-
+<script src="index.js"></script>
 </html>
 
-<script>
-    new Vue({})
-</script>
