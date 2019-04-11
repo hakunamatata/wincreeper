@@ -10,119 +10,118 @@
     <script src="Content/js/axios.js"></script>
     <script src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script>
     <link href="Content/css/vote.css" rel="stylesheet" />
+    <link href="Content/css/index.css" rel="stylesheet" />
 </head>
 <body>
     <div id="app">
         <div>
             <div class='title'>
                 <!-- <img src='../img/austrlia.jpg' class='map'></img> -->
-                <text class='dxtitle'>{{pageData.Title}}</text>
+                <div class='dxtitle'>澳州大选,有您来选</div>
             </div>
 
 
             <div class='pandaContainer'>
                 <div class='pandatitle'>
-                    <text>{{pageData.SubTitle}}</text>
+                    <div>守护澳洲大熊猫夫妇</div>
                 </div>
-                <img src='{{pageData.Media}}' class='panda' wx:if='{{pageData.MediaType==1}}'></img>
-                <video src='{{pageData.Media}}' class='panda' wx:if='{{pageData.MediaType==2}}'></video>
+                <img src='/Content/Image/dxm.jpg' class='panda' />
                 <div class='opera'>
                     <div class='content'>
-                        {{pageData.Content}}
+                        澳洲两大政党之争，难道我们的大熊猫要沦落为政治斗争的牺牲品吗？“熊猫政治“该停止了！让我们集体团结发声，
+                        聚华人之力量，为Wang Wang和Fu Ni的居留权做主！请投上您支持的一票！
                         <div class='openread'>
-                            <!-- <text class='open'>展开阅读</text> -->
+                            <!-- <div class='open'>展开阅读</div> -->
                         </div>
                     </div>
                 </div>
                 <div class='heartContainer'>
                     <div class='heartArea'>
                         <div>
-                            <img src='../img/heart.png' class='heart'></img>
+                            <img src='/Content/Image/heart.png' class='heart' />
                         </div>
-                        <text class='heartCount'>{{pageData.Likes}}</text>
+                        <div class='heartCount'>971</div>
                     </div>
-                    <img src='../img/support.png' class='support' v-if='{{liked}}' />
-                    <img src='../img/unsupport.png' class='support' bindtap='like' />
+                    <img src='/Content/Image/support.png' class='support' />
+                    <!--<img src='/Content/Image/unsupport.png' class='support' />-->
                 </div>
             </div>
 
-            <form bindsubmit='formSubmit'>
-                <div class='prime' wx:for='{{pageData.Subjects}}' wx:key='{{index}}'>
+            <form>
+                <div class='prime'>
                     <div class='primetitle'>
-                        <text>{{item.Title}}</text>
+                        <div>国家首相有您来选</div>
                     </div>
-                    <img src='{{item.Media}}' class='panda' />
+                    <img src='/Content/Image/dx.png' class='panda' />
                     <div class='vsarea'>
-                        <img src='../img/vs.png' class='vs'></img>
+                        <img src='Content/Image/vs.png' class='vs' />
                     </div>
                     <div class='people'>
-                        <div class='primeone' wx:for='{{item.Options}}' wx:for-item='cell' wx:key='{{index}}'>
-                            <div class='nick' wx:if='{{cell.ReferenceType==1}}'>{{cell.Reference.Name}}</div>
-                            <div class='nick' wx:else>{{cell.Title}}</div>
-                            <div class='introduce' wx:if='{{cell.ReferenceType==1}}'>{{cell.Reference.Title}}</div>
-                            <div class='introduce' wx:else>{{cell.Reference.Name}}介绍</div>
-                            <div class='ticket'>{{cell.Votes}}</div>
-                            <button class='btnSupp' data-sid='{{item.Id}}' data-ops='{{cell}}' bindtap='support'>支持</button>
+                        <div class='primeone'>
+                            <div class='nick'>莫里森</div>
+                            <!--<div class='nick' ></div>-->
+                            <div class='introduce'> 澳州首相</div>
+                            <!--<div class='introduce' ></div>-->
+                            <div class='ticket'>150</div>
+                            <button class='btnSupp'>支持</button>
 
                             <!-- <img  src='../img/unsupport.png' class='primeSupp' bindtap='support'></img> -->
                         </div>
                     </div>
 
                 </div>
-                <official-account></official-account>
+
                 <div class='buttonarea'>
-                    <button class='button' form-type='submit'>确认投票</button>
+                    <button class='button'>确认投票</button>
                 </div>
             </form>
 
             <div class='foot'>
 
                 <div class='one'>
-                    <button open-type='share' class='btnshare'>+</button>
-                    <text class='rank'>分享大使</text>
+                    <button class='btnshare'>+</button>
+                    <div class='rank'>分享大使</div>
                 </div>
-                <scroll-div scroll-x class='scroll-header'>
-                    <div class='two' wx:for='{{scroll}}' wx:key="{{index}}">
-                        <img src='../img/dxm.jpg' class='dxm'>
-                        </img>
+                <!--<scroll-div scroll-x class='scroll-header'>
+                    <div class='two'>
+                        <img src='../img/dxm.jpg' class='dxm' />
                         <div class='rank'>461</div>
                     </div>
-                </scroll-div>
+                </scroll-div>-->
             </div>
 
-            <!-- <div class='news'>
-              <div class='pandatitle'>
-                <text>最新动态</text>
-              </div>
-              <img src='{{pageData.Media}}' class='panda' wx:if='{{pageData.MediaType==1}}'></img>
-              <video src='{{pageData.Media}}' class='panda' wx:if='{{pageData.MediaType==2}}'></video>
-              <div class='opera'>
-                <div class='content'>
-                  {{pageData.Content}}
-                </div>
-              </div>
-            </div> -->
 
 
-            <div class="modal-box" hidden='{{!showTip}}'>
-                <div class="modal-content">
-                    <div class="content-title">微信授权</div>
-                    <div class='logoArea'>
-                        <img src='../img/logo.png' class='logo'></img>
-                    </div>
-                    <div class="content-text">
-                        为了投票结果的严肃性，天天热点传媒需要您的授权
-                    </div>
+                <!-- <div class='news'>
+          <div class='pandatitle'>
+            <div>最新动态</div>
+          </div>
+          <img src='{{pageData.Media}}' class='panda' wx:if='{{pageData.MediaType==1}}' />
+          <div class='opera'>
+            <div class='content'>
+              {{pageData.Content}}
+            </div>
+          </div>
+        </div> -->
+                <!--<div class="modal-box" hidden='{{!showTip}}'>
+            <div class="modal-content">
+                <div class="content-title">微信授权</div>
+                <div class='logoArea'>
+                    <img src='../img/logo.png' class='logo' />
                 </div>
-                <div class="modal-btns">
-                    <div class="weui-flex">
-                        <div class="weui-flex__item">
-                            <button class="dialog-btn confirm" open-type="getUserInfo" bindgetuserinfo="getUserInfo">开始授权</button>
-                            <button class="dialog-btn exit" bindtap='exit'>取消</button>
-                        </div>
+                <div class="content-div">
+                    为了投票结果的严肃性，天天热点传媒需要您的授权
+                </div>
+            </div>
+            <div class="modal-btns">
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <button class="dialog-btn confirm" open-type="getUserInfo" bindgetuserinfo="getUserInfo">开始授权</button>
+                        <button class="dialog-btn exit" bindtap='exit'>取消</button>
                     </div>
                 </div>
             </div>
+        </div>-->
 
         </div>
     </div>

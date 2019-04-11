@@ -90,7 +90,7 @@
     <Content Include="Content\Image\support.png" />
     <Content Include="Content\Image\unsupport.png" />
     <Content Include="Content\Image\vs.png" />
-    <Content Include="Content\index.css" />
+    <Content Include="Content\css\index.css" />
     <Content Include="Content\js\axios.js" />
     <Content Include="Content\js\vue.js" />
     <Content Include="Global.asax" />
