@@ -123,10 +123,6 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CreSync.ServiceCore\CreSync.ServiceCore.csproj">
-      <Project>{d833d4c0-70c0-4d18-a980-5b5324652b61}</Project>
-      <Name>CreSync.ServiceCore</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VoteCore\VoteCore.csproj">
       <Project>{962508FE-F3B9-4413-A242-D0C78728C12E}</Project>
       <Name>VoteCore</Name>

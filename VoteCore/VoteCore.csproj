@@ -46,7 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Result.cs" />
+    <Compile Include="Components\TopicRank.cs" />
+    <Compile Include="Components\WxUser.cs" />
+    <Compile Include="Components\WxUserRelation.cs" />
     <Compile Include="Models\LikePost.cs" />
+    <Compile Include="Models\RankPost.cs" />
     <Compile Include="Models\Sns\JsCode2SessionPost.cs" />
     <Compile Include="Models\VotePost.cs" />
     <Compile Include="Services\BaseRepository.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="Services\VoteService.cs" />
     <Compile Include="Services\VoteService.Result.cs" />
     <Compile Include="Services\VoteService.Topic.cs" />
+    <Compile Include="Services\WxUserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CreSync.ServiceCore\CreSync.ServiceCore.csproj">

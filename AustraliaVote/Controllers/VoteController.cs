@@ -34,7 +34,7 @@ namespace AustraliaVote.Controllers
     public class VoteController : ApiController
     {
         private VoteService topicService;
-
+        private WxUserService userService;
 
         [Route("vote/topic/{id}")]
         [HttpGet]
@@ -77,6 +77,21 @@ namespace AustraliaVote.Controllers
             try {
                 topicService = new VoteService();
                 return Ok(topicService.Like(likeBody.tid));
+            }
+            catch (Exception ex) {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("vote/topic/rank")]
+        public IHttpActionResult GetRank([FromBody] RankPost rankBody)
+        {
+            try {
+                userService = new WxUserService();
+                if (string.IsNullOrEmpty(rankBody.tid))
+                    throw new ArgumentNullException("tid");
+
+                return Ok(userService.GetTopicInviteRank(rankBody.tid, rankBody.uid));
             }
             catch (Exception ex) {
                 return InternalServerError(ex);

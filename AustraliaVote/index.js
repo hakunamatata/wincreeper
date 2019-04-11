@@ -91,6 +91,26 @@ function like_topic(topicId, success, error) {
         .catch(error);
 }
 
+/**
+ * 获取某主题的拉票排行
+ * @param {any} topicId 主题编号
+ * @param {any} openId 用户openId
+ * @param {any} success 接口调用成功回调
+ * @param {any} error 接口调用失败回调
+ */
+function get_rank(topicId, openId, success, error) {
+    axios.post(server + 'vote/topic/rank', { tid: topicId, uid: openId })
+        .then(res => {
+            if (res.status == 200) {
+                if (success) success(res.data);
+            }
+            else {
+                if (error) error(res);
+            }
+        })
+        .catch(error);
+}
+
 //querymap: {
 //    // 主题编号
 //    topic: 'xxxxx-xxxx-xxxx-xxxx-xxxxxxxx';
@@ -157,8 +177,8 @@ new Vue({
         return {
             pageData: {},
             postData: {},
-            item:[1,2,3,4,5]
-            
+            item: [1, 2, 3, 4, 5]
+
         }
     },
     methods: {
@@ -181,7 +201,7 @@ new Vue({
                     }]
                 })
             }
-            
+
 
             //console.log('post',this.postData);
 
@@ -201,7 +221,7 @@ new Vue({
                         that.pageData = res;
                         //console.log('ok',res);
                     });
-                
+
             }, err => {
 
             });
@@ -209,15 +229,15 @@ new Vue({
 
     },
     created() {
-      
+
     },
     mounted() {
         get_topic('2166554f-14f9-43ad-ae2b-cd9f59e065bf',
             res => {
-                console.log('res',res);
+                console.log('res', res);
                 for (var value of res.Subjects) {
                     for (var opt of value.Options) {
-                        opt.avtive=false;
+                        opt.avtive = false;
                     }
                 }
                 this.pageData = res;
