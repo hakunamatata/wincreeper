@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3BE5A18A-D737-4FB2-8E91-5FF8176775F3}</ProjectGuid>
+    <ProjectGuid>{5A986772-53A8-4E47-8729-1113AE845E9D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WechatUtil</RootNamespace>
-    <AssemblyName>WechatUtil</AssemblyName>
+    <RootNamespace>Util</RootNamespace>
+    <AssemblyName>Util</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,13 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,37 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Attribute\IAttribute.cs" />
-    <Compile Include="Common\Attribute\IsNotNullAttribute.cs" />
-    <Compile Include="Common\Attribute\LengthAttribute.cs" />
-    <Compile Include="Common\HttpGetFileRequest.cs" />
-    <Compile Include="Common\HttpGetRequest.cs" />
-    <Compile Include="Common\HttpHelper.cs" />
-    <Compile Include="Common\HttpPostFileRequest.cs" />
-    <Compile Include="Common\HttpPostRequest.cs" />
-    <Compile Include="Common\IHttpSend.cs" />
-    <Compile Include="Common\ISend.cs" />
-    <Compile Include="Common\JSAPITicket.cs" />
-    <Compile Include="Common\JSSDK.cs" />
-    <Compile Include="Common\OAuthToken.cs" />
-    <Compile Include="Common\OperationRequestBase.cs" />
-    <Compile Include="Common\OperationResultsBase.cs" />
-    <Compile Include="Common\Token.cs" />
+    <Compile Include="Constant.cs" />
+    <Compile Include="Cryptography.cs" />
+    <Compile Include="DateTime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Public\MiniApp\JsCode2Session.cs" />
-    <Compile Include="Public\User\BatchGetUser.cs" />
-    <Compile Include="Public\User\GetUser.cs" />
-    <Compile Include="Public\User\GetUserDetail.cs" />
-    <Compile Include="User.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Util\Util.csproj">
-      <Project>{5a986772-53a8-4e47-8729-1113ae845e9d}</Project>
-      <Name>Util</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

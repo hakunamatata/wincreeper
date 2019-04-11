@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using VoteCore.Models.Sns;
+using WechatUtil.Common;
 using WechatUtil.Common.Helper;
 using WechatUtil.Public.MiniApp;
 
@@ -33,5 +35,35 @@ namespace AustraliaVote.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        /// <summary>
+        /// https://mini.artibition.cn/sns/wxconf
+        /// </summary>
+        /// <returns></returns>
+        [Route("sns/wxconf")]
+        [HttpGet]
+        public IHttpActionResult GetWechatConfig(string url)
+        {
+            try {
+                if (string.IsNullOrEmpty(url))
+                    throw new ArgumentNullException("url");
+
+                return Ok(JSSDK.GetWxConfig(url));
+            }
+            catch (Exception ex) {
+                return InternalServerError(ex);
+            }
+        }
+
+
+        //public IHttpActionResult GetAuthBase()
+        //{
+
+        //}
+
+        //public IHttpActionResult GetAuthInfo()
+        //{
+
+        //}
     }
 }
