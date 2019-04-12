@@ -52,6 +52,7 @@
     <Compile Include="Models\LikePost.cs" />
     <Compile Include="Models\RankPost.cs" />
     <Compile Include="Models\Sns\JsCode2SessionPost.cs" />
+    <Compile Include="Models\Sns\UrlPost.cs" />
     <Compile Include="Models\VotePost.cs" />
     <Compile Include="Services\BaseRepository.cs" />
     <Compile Include="Components\Competitor.cs" />

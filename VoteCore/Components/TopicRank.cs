@@ -14,6 +14,6 @@ namespace VoteCore.Components
         public string openid { get; set; }
         public string nickname { get; set; }
         public string headimgurl { get; set; }
-        public int rank { get; set; } = 0
+        public int rank { get; set; } = 0;
     }
 }

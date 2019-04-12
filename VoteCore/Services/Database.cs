@@ -10,14 +10,15 @@ namespace VoteCore.Services
 {
     public static class Database
     {
-        private static IDbConnection connection;
+        //private static IDbConnection connection;
         public static IDbConnection Connection
         {
             get
             {
-                if (connection == null)
-                    connection = new SqlConnection(ConfigurationManager.ConnectionStrings["VoteDb"].ConnectionString);
-                return connection;
+                return new SqlConnection(ConfigurationManager.ConnectionStrings["VoteDb"].ConnectionString);
+                //if (connection == null)
+                //    connection = new SqlConnection(ConfigurationManager.ConnectionStrings["VoteDb"].ConnectionString);
+                //return connection;
             }
         }
 

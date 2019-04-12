@@ -9,7 +9,7 @@ namespace VoteCore.Components
     public class WxUser
     {
         public string openid { get; set; }
-        public bool subscribe { get; set; } = false;
+        public bool? subscribe { get; set; } = null;
         public string nickname { get; set; }
         public int? sex { get; set; } = null;
         public string language { get; set; } = "zh_CN";
@@ -17,7 +17,7 @@ namespace VoteCore.Components
         public string province { get; set; }
         public string country { get; set; }
         public string headimgurl { get; set; }
-        public int subscribe_time { get; set; }
+        public int? subscribe_time { get; set; } = null;
         public string unionid { get; set; }
         public string remark { get; set; }
         public int? groupid { get; set; }
@@ -25,6 +25,8 @@ namespace VoteCore.Components
         public string subscribe_scene { get; set; }
         public int? qr_scene { get; set; }
         public string qr_scene_str { get; set; }
+        public string ip_address { get; set; }
+        public string ip_region { get; set; }
         public List<WxRelation> fromInvites { get; set; }
     }
 }

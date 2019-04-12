@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -11,13 +12,16 @@ namespace WechatUtil.Common
 {
     public class JSSDK
     {
+        static ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public static WechatWebConfig GetWxConfig(string url)
         {
             var config = new WechatWebConfig {
                 appid = ConfigurationManager.AppSettings["appid"],
+                oauthid = ConfigurationManager.AppSettings["oauthId"],
                 nonce = GetNonce(),
                 ticket = JSAPITicket.GetTicket(),
-                timestamp = GetTimestamp()
+                timestamp = GetTimestamp(),
+                url = url
             };
             config.signature = GetSignature(config.ticket, config.timestamp, config.nonce, url);
             return config;
@@ -64,9 +68,11 @@ namespace WechatUtil.Common
     public class WechatWebConfig
     {
         public string appid { get; set; }
+        public string oauthid { get; set; }
         public string ticket { get; set; }
         public string nonce { get; set; }
         public string timestamp { get; set; }
         public string signature { get; set; }
+        public string url { get; set; }
     }
 }

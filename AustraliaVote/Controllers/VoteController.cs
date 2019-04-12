@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Util;
 using VoteCore.Models;
 using VoteCore.Services;
 
@@ -33,19 +34,36 @@ namespace AustraliaVote.Controllers
 {
     public class VoteController : ApiController
     {
-        private VoteService topicService;
+        private VoteService voteService;
         private WxUserService userService;
 
         [Route("vote/topic/{id}")]
         [HttpGet]
-        public IHttpActionResult GetTopic(string id)
+        public IHttpActionResult GetTopic(string id, string uid)
         {
             try {
                 if (string.IsNullOrEmpty(id))
                     throw new ArgumentNullException("id");
 
-                topicService = new VoteService();
-                return Ok(topicService.GetTopic(id));
+                voteService = new VoteService();
+                var topic = voteService.GetTopic(id);
+                if (!string.IsNullOrEmpty(uid)) {
+                    var myVotes = voteService.GetUserVotes(id, uid);
+                    var myOptions = myVotes.Select(p => p.Option.Id);
+                    var subs = myVotes.Select(p => p.Subject).Select(p => new { id = p.Id, ops = new List<object>() }).ToList();
+                    subs.ForEach(p => {
+                        foreach (var v in myVotes) {
+                            if (v.Subject.Id == p.id)
+                                p.ops.Add(new { id = v.Option.Id, order = v.Option.Order });
+                        }
+                    });
+                    return Ok(topic.Merge(new {
+                        MyVotes = myOptions,
+                        MySubs = subs
+                    }));
+                }
+
+                return Ok(topic);
             }
             catch (ArgumentNullException ex_null) {
                 return InternalServerError(ex_null);
@@ -60,14 +78,26 @@ namespace AustraliaVote.Controllers
         public IHttpActionResult Vote(string id, [FromBody] VotePost voteBody)
         {
             try {
-                topicService = new VoteService();
-                return Ok(topicService.Vote(id, voteBody));
+                voteService = new VoteService();
+                return Ok(voteService.Vote(id, voteBody));
             }
             catch (Exception ex) {
                 return InternalServerError(ex);
             }
         }
 
+        [Route("vote/topic/myvotes")]
+        [HttpPost]
+        public IHttpActionResult MyVotes([FromBody] RankPost post)
+        {
+            try {
+                voteService = new VoteService();
+                return Ok();
+            }
+            catch (Exception ex) {
+                return InternalServerError(ex);
+            }
+        }
 
 
         [Route("vote/topic/like")]
@@ -75,8 +105,8 @@ namespace AustraliaVote.Controllers
         public IHttpActionResult Like([FromBody] LikePost likeBody)
         {
             try {
-                topicService = new VoteService();
-                return Ok(topicService.Like(likeBody.tid));
+                voteService = new VoteService();
+                return Ok(voteService.Like(likeBody.tid));
             }
             catch (Exception ex) {
                 return InternalServerError(ex);
@@ -84,6 +114,7 @@ namespace AustraliaVote.Controllers
         }
 
         [Route("vote/topic/rank")]
+        [HttpPost]
         public IHttpActionResult GetRank([FromBody] RankPost rankBody)
         {
             try {

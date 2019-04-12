@@ -43,6 +43,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IP2Region, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IP2Region.1.2.0\lib\net46\IP2Region.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -82,11 +88,14 @@
   <ItemGroup>
     <Content Include="Content\css\vote.css" />
     <Content Include="Content\Image\austrlia.jpg" />
+    <Content Include="Content\Image\campaign.png" />
     <Content Include="Content\Image\dx.png" />
     <Content Include="Content\Image\dxm.jpg" />
     <Content Include="Content\Image\heart.png" />
     <Content Include="Content\Image\logo.png" />
     <Content Include="Content\Image\party.png" />
+    <Content Include="Content\Image\rank.png" />
+    <Content Include="Content\Image\share.png" />
     <Content Include="Content\Image\support.png" />
     <Content Include="Content\Image\unsupport.png" />
     <Content Include="Content\Image\vs.png" />
@@ -109,6 +118,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\js\qs.js" />
+    <Content Include="Config\log4net.config" />
+    <Content Include="App_Data\ip2region.db" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
@@ -119,10 +130,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{5A986772-53A8-4E47-8729-1113AE845E9D}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VoteCore\VoteCore.csproj">
       <Project>{962508FE-F3B9-4413-A242-D0C78728C12E}</Project>
       <Name>VoteCore</Name>

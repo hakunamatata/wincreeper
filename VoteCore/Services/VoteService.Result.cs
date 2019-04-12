@@ -20,7 +20,7 @@ namespace VoteCore.Services
         private readonly string SQL_VOTE_DECREASE_OPTION_VOTE = @"
                 if exists(select * from Vote_Result where Id=@topicId and SubjectId=@subjectId and OptionId=@optionId)
                 begin 
-	                if 1<=(select Votes from Vote_Result where Id=@topicId and SubjectId=@subjectId and OptionId=@optionId)
+	                if 1>=(select Votes from Vote_Result where Id=@topicId and SubjectId=@subjectId and OptionId=@optionId)
 		                delete Vote_Result where Id=@topicId and SubjectId=@subjectId and OptionId=@optionId
 	                else
 		                update Vote_Result set Votes = Votes - 1 where Id=@topicId and SubjectId=@subjectId and OptionId=@optionId
