@@ -6,11 +6,12 @@
     <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
-    <script src="Content/js/vue.js"></script>
+    <script src="Content/js/vue.min.js"></script>
     <script src="Content/js/axios.js"></script>
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
     <script src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script>
     <script src="Content/js/qs.js"></script>
+    <script src="Content/js/voteapi.js"></script>
     <link href="Content/css/vote.css" rel="stylesheet" />
     <link href="Content/css/index.css" rel="stylesheet" />
 </head>
@@ -78,7 +79,7 @@
         <div class='foot'>
             <div class='ele'>
                 <img src='./Content/Image/campaign.png' class='dxm' />
-                <div class='rank' v-on:click="shareTimeline">分享大使</div>
+                <div class='rank'>分享大使</div>
             </div>
 
             <div class='ele' v-for="p in rankData">

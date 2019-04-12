@@ -101,8 +101,11 @@
     <Content Include="Content\Image\vs.png" />
     <Content Include="Content\css\index.css" />
     <Content Include="Content\js\axios.js" />
+    <Content Include="Content\js\voteapi.js" />
+    <Content Include="Content\js\vue.min.js" />
     <Content Include="Content\js\vue.js" />
     <Content Include="Global.asax" />
+    <Content Include="index.min.js" />
     <Content Include="index.html" />
     <Content Include="index.js" />
     <Content Include="Web.config" />

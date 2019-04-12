@@ -1,213 +1,12 @@
-﻿/* API Server*/
-const server = location.origin + '/';
-
-//querymap: {
-//    // 主题编号
-//    topic: 'xxxxx-xxxx-xxxx-xxxx-xxxxxxxx';
-//    // 微信授权的 code
-//    code: 'xxxxx';
-//    // 来源微信openid
-//    invite: '';
-//}
-
-/**
- *  页面参数
- */
-let query = location.search.charAt(0) == '?' ?
-    Qs.parse(location.search.substring(1)) :
-    {};
-
-let pageParam = {
-    topic: query.topic
-}
-
-let globalData = {
-
-}
-/*
- * pageParam: 保存页面中的关键信息 
- */
-if (query.invite)
-    pageParam.invite = query.invite;
-
-function getPageUrl() {
-    return location.origin + location.pathname + '?' + Qs.stringify(pageParam);
-}
-
-/**
- * 获取服务器中的微信页面配置参数
- * @param {any} success
- * @param {any} error
- */
-function get_wxconfig(success, error) {
-    axios.post(server + 'sns/wxconf', { url: location.href })
-        .then(res => {
-            if (res.status == 200) {
-                if (success) success(res.data);
-            }
-            else {
-                if (error) error(res);
-            }
-        })
-        .catch(error);
-
-}
-/**
- * 基础授权,获取openid
- * @param {any} success
- * @param {any} error
- */
-function auth_base(success, error) {
-    let invite = query.invite == undefined ? '' : query.invite;
-    axios.post(server + 'sns/authbase?code=' + query.code + '&topic=' + query.topic + '&invite=' + invite)
-        .then(res => {
-            if (res.status == 200) {
-                if (success) success(res.data);
-            }
-            else {
-                if (error) error(res);
-            }
-        })
-        .catch(error)
-}
-
-/**
- * 获取用户详细信息
- * @param {any} success
- * @param {any} error
- */
-function user_info(success, error) {
-
-    axios.get(server + 'sns/userinfo?code=' + query.code)
-        .then(res => {
-            if (res.status == 200) {
-                if (success) success(res.data)
-            }
-            else {
-                if (error) error(res);
-            }
-        })
-        .catch(error);
-}
-
-/**
- * 获取投票主题的信息
- * @param {String} topicId 主题ID
- * @param {Function} callback 接口调用成功    
- * @param {Function} error 接口调用失败
- */
-function get_topic(topicId, userId, success, error) {
-    axios.get(server + 'vote/topic/' + topicId + '?uid=' + userId)
-        .then(res => {
-            if (res.status == 200) {
-                if (success) success(res.data);
-            }
-            else {
-                if (error) error(res);
-            }
-        })
-        .catch(error);
-};
-
-
-/**
- * 对主题进行投票
- * @param {String} topicId 主题ID
- * @param {Object} data 投票数据
- * {
- *   uid: String 微信用户的openid,
- *   subs: Array 主题中所有投票题目
- *   [{
- *      id: String 题目编号
- *      ops: Array 题目中的选项
- *      [{
- *        id: String 选项编号
- *        order:Number 选择顺序
- *      }]
- *   }]
- * }
- * @param {Function} success 接口调用成功回调
- * @param {Function} error 接口调用失败回调
- */
-function vote_topic(topicId, data, success, error) {
-    axios.post(server + 'vote/topic/' + topicId, data)
-        .then(res => {
-            if (res.status == 200) {
-                if (success) success(res.data);
-            }
-            else {
-                if (error) error(res);
-            }
-        })
-        .catch(error);
-
-};
-
-/**
- * 获取某人在某主题下的投票结果
- * @param {any} topicId
- * @param {any} userId
- * @param {any} success
- * @param {any} error
- */
-function get_myvotes(topicId, userId, success, error) {
-    axios.post(server + 'vote/topic/myvotes', { tid: topicId, uid: userId })
-        .then(res => {
-            if (res.status == 200) {
-                if (success) success(res.data);
-            }
-            else {
-                if (error) error(res);
-            }
-        }).catch(error);
-}
-
-/**
- * 喜欢某一个主题
- * @param {String} topicId 主题编号
- * @param {Function} success 接口调用成功回调
- * @param {Function} error 接口调用失败回调
- * @return {Number} 返回当前主题被喜欢的数量
- */
-function like_topic(topicId, success, error) {
-    axios.post(server + 'vote/topic/like', { tid: topicId })
-        .then(res => {
-            if (res.status == 200) {
-                if (success) success(res.data);
-            }
-            else {
-                if (error) error(res);
-            }
-        })
-        .catch(error);
-}
-
-/**
- * 获取某主题的拉票排行
- * @param {any} topicId 主题编号
- * @param {any} openId 用户openId
- * @param {any} success 接口调用成功回调
- * @param {any} error 接口调用失败回调
- */
-function get_rank(topicId, openId, success, error) {
-    axios.post(server + 'vote/topic/rank', { tid: topicId, uid: openId })
-        .then(res => {
-            if (res.status == 200) {
-                if (success) success(res.data);
-            }
-            else {
-                if (error) error(res);
-            }
-        })
-        .catch(error);
-}
-
-let wxConfig = {};
+﻿let wxConfig = {};
+let shareTitle = '';
+let shareContent = '';
+let shareLink = '';
+let shareImg = '';
 /*
  * 获取微信配置以及微信页面初始化
 **/
 get_wxconfig(res => {
-    console.log('微信初始化成功');
     wxConfig = res;
     wx.config({
         debug: false,
@@ -217,54 +16,8 @@ get_wxconfig(res => {
         signature: res.signature,
         jsApiList: ['checkJsApi', 'onMenuShareTimeline', 'onMenuShareAppMessage']
     });
-    // 加载页面
-    pageLoad();
 
-}, err => {
-    console.log('页面加载失败: ' + err);
-})
-
-/**
- * 分享至朋友圈
- * @param {any} title 分享标题
- * @param {any} desc 分享描述
- * @param {any} link 分享连接
- * @param {any} imgUrl 图片地址
- */
-function shareTimeline(title, desc, link, imgUrl) {
-    if (WeixinJSBridge)
-        WeixinJSBridge.invoke('shareTimeline', {
-            "img_url": imgUrl,
-            "link": link,
-            "desc": desc,
-            "title": title
-        });
-}
-
-/**
- * 发送给好友
- * @param {any} title 分享标题
- * @param {any} desc 分享描述
- * @param {any} link 分享连接
- * @param {any} imgUrl 图片地址
- */
-function sendAppMessage(title, desc, link, imgUrl) {
-    if (WeixinJSBridge)
-        WeixinJSBridge.invoke('sendAppMessage', {
-            "img_url": imgUrl,
-            "link": link,
-            "desc": desc,
-            "title": title
-        });
-}
-
-let shareTitle = '';
-let shareContent = '';
-let shareLink = '';
-let shareImg = '';
-
-wx.ready(() => {
-    console.log('微信准备就绪');
+    wx.ready(() => {
     wx.onMenuShareAppMessage({
         title: shareTitle, // 分享标题
         desc: shareContent, // 分享描述
@@ -282,12 +35,20 @@ wx.ready(() => {
 });
 
 Vue.prototype.$http = axios;
+    // 加载页面
+    pageLoad();
+
+}, err => {
+});
+
+
+
 
 function pageLoad() {
     if (query.code === '' || query.code == null) {
         location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + wxConfig.oauthid + '&redirect_uri=' + encodeURIComponent(location.href) + '&response_type=code&scope=snsapi_base&state=requestingCallback#wechat_redirect';
         return;
-    }
+    };
 
 
 
@@ -295,14 +56,14 @@ function pageLoad() {
         if (res.openid == '' || res.openid == null) {
             location.href = getPageUrl();
             return;
-        }
-        globalData = { ...res, ...globalData }
+        };
+        globalData = { ...res, ...globalData };
         render_page();
     }, err => {
         location.href = getPageUrl();
         return;
     });
-}
+};
 
 function render_page() {
     new Vue({
@@ -337,7 +98,7 @@ function render_page() {
                     }
                 });
                 if (postSub == null) {
-                    postSub = { id: sub.Id }
+                    postSub = { id: sub.Id };
                     this.postData.subs.push(postSub);
                 }
                 postSub.ops = sub.Options.map((o, i) => {
@@ -376,9 +137,9 @@ function render_page() {
                     this.pageData.Subjects.forEach(s => {
                         var check = that.postData.subs.find(p => p.id == s.Id);
                         if (check == null)
-                            throw '请对 \"' + s.Title + '\"进行投票'
+                            throw '请对 \"' + s.Title + '\"进行投票';
                         else if (check.ops.length == 0)
-                            throw '请对 \"' + s.Title + '\"进行投票'
+                            throw '请对 \"' + s.Title + '\"进行投票';
                         else if (check.ops.length > s.MaxOptions)
                             throw '\"' + s.Title + '\" 最多只能投 ' + s.MaxOptions + '票';
                     });
@@ -411,7 +172,7 @@ function render_page() {
                         shareContent = res.Content;
                         shareLink = getPageUrl();
                         shareImg = media;
-                        let myvotes = res.MyVotes || []
+                        let myvotes = res.MyVotes || [];
                         for (var value of res.Subjects) {
                             for (var opt of value.Options) {
                                 if (myvotes.includes(opt.Id))
@@ -445,15 +206,10 @@ function render_page() {
             getRank() {
                 get_rank(query.topic, this.userInfo.openid, res => {
                     this.rankData = res;
-                    console.log('rank:');
-                    console.log(res);
                 }, err => {
                     console.log(err);
                 });
-            },
-            shareTimeline() {
             }
-
         },
         computed: {
             userObtained() {
@@ -464,7 +220,7 @@ function render_page() {
             }
         },
         created() {
-            this.postData.uid = globalData.openid
+            this.postData.uid = globalData.openid;
             this.postData.subs = [];
             this.likeStatus = localStorage.getItem('like:' + query.topic) == '1';
         },
@@ -473,4 +229,4 @@ function render_page() {
             this.getUserInfo();
         }
     });
-}
+};
