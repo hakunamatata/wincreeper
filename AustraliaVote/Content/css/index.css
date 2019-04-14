@@ -256,6 +256,8 @@ body {
     background-color: rgb(247, 181, 0);
     width: 160px;
     color: white;
+    font-size: .9em;
+    text-shadow: 1px 1px #847151;
 }
 
 .button-disabled {
@@ -286,7 +288,7 @@ body {
     border-radius: 10px;
     overflow-y: hidden;
     overflow-x: scroll;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .circleone {
@@ -418,6 +420,18 @@ body {
     white-space: nowrap;
 }
 
+.copyright {
+    font-size: .81em;
+    color: white;
+    text-align: center;
+    padding: .5em;
+    text-shadow: 1px 1px #333
+}
+
+    .copyright a {
+        color: white;
+    }
+
 .subsc-tip {
     position: absolute;
     top: 50px;
@@ -451,13 +465,15 @@ body {
     }
 
 .tip-foot {
+    background-color: rgb(247, 181, 0);
+    color: white;
+    font-size: 1em;
+    text-shadow: 1px 1px #847151;
     margin-top: 10px;
+    margin-bottom:10px;
     border-radius: 10px;
     width: 100%;
     height: 40px;
-    color: white;
-    font-size: 20px;
-    text-align:center;
-    line-height:40px;
-    background-color: rgb(84, 190, 94);
+    text-align: center;
+    line-height: 40px;
 }

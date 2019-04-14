@@ -17,77 +17,82 @@
 </head>
 <body>
     <div id="app" v-cloak>
-        <div class='title'>
-            <img src="./Content/Image/austrlia.jpg" class='map' />
-            <div class='dxtitle'>{{pageData.Title}}</div>
-        </div>
-
-        <div class='pandaContainer'>
-            <div class='pandatitle'>
-                <div>{{pageData.SubTitle}}</div>
+        
+            <div class='title'>
+                <img src="./Content/Image/austrlia.jpg" class='map' />
+                <div class='dxtitle'>{{pageData.Title}}</div>
             </div>
-            <img v-bind:src='pageData.Media' class='panda' />
-            <div class='opera'>
-                <div class='content'>
-                    {{pageData.Content}}
-                    <div class='openread'>
-                        <!-- <div class='open'>展开阅读</div> -->
+            <div v-if="!showRemarks && !showRules">
+                <div class='pandaContainer'>
+                    <div class='pandatitle'>
+                        <div>{{pageData.SubTitle}}</div>
+                    </div>
+                    <img v-bind:src='pageData.Media' class='panda' />
+                    <div class='opera'>
+                        <div class='content'>
+                            {{pageData.Content}}
+                            <div class='openread'>
+                                <!-- <div class='open'>展开阅读</div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class='heartContainer'>
+                        <div class='heartArea'>
+                            <div>
+                                <img src='./Content/Image/heart.png' class='heart' />
+                            </div>
+                            <div class='heartCount'>{{pageData.Likes}}</div>
+                        </div>
+                        <div class="heartRight">
+                            <img src='./Content/Image/support.png' class='support' v-if="likeStatus" />
+                            <img src='./Content/Image/unsupport.png' class='support' v-on:click="like(pageData.Id)" v-else />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class='heartContainer'>
-                <div class='heartArea'>
-                    <div>
-                        <img src='./Content/Image/heart.png' class='heart' />
+
+                <div class='prime' v-for="p in pageData.Subjects">
+                    <div class='primetitle'>
+                        <div>{{p.Title}}</div>
                     </div>
-                    <div class='heartCount'>{{pageData.Likes}}</div>
+                    <img v-bind:src='p.Media' class='panda' />
+                    <div class='vsarea'>
+                        <img src='Content/Image/vs.png' class='vs' />
+                    </div>
+                    <div class='people'>
+                        <div class='primeone' v-for="cell in p.Options">
+                            <div class='nick' v-if="cell.ReferenceType==1">{{cell.Reference.Name}}</div>
+                            <div class='nick' v-else>{{cell.Title}}</div>
+                            <div class='introduce' v-if="cell.ReferenceType==1"> {{cell.Reference.Title}}</div>
+                            <div class='introduce' v-else>{{cell.Title}}介绍</div>
+                            <div class='ticket'>{{cell.Votes}}</div>
+                            <img class="btnSupp" src="Content/Image/support.png" v-if="cell.active" />
+                            <img class="btnSupp" src="Content/Image/unsupport.png" v-on:click="support(cell,p)" v-else />
+                        </div>
+                    </div>
+
                 </div>
-                <div class="heartRight">
-                    <img src='./Content/Image/support.png' class='support' v-if="likeStatus" />
-                    <img src='./Content/Image/unsupport.png' class='support' v-on:click="like(pageData.Id)" v-else />
+
+                <div class='buttonarea'>
+                    <button class='button-disabled' disabled v-if="isVoted">感谢您的投票</button>
+                    <button class='button' v-on:click="post" v-else>确认投票</button>
+                </div>
+
+                <div class='foot'>
+                    <div class='ele'>
+                        <img src='./Content/Image/campaign.png' class='dxm' />
+                        <div class='rank'>分享大使</div>
+                    </div>
+
+                    <div class='ele' v-for="p in rankData">
+                        <img v-bind:src='p.headimgurl' class='dxm' />
+                        <div class='rank'>{{p.rank}}</div>
+                    </div>
+
+                </div>
+                <div class="copyright">
+                    Copyright<sup>©</sup>2019 by News天天 &nbsp;&nbsp; <a v-on:click="showRules=true;window.scrollTo({top:0});">活动规则</a> | <a v-on:click="showRemarks=true;window.scrollTo({top:0});">免责条款</a>
                 </div>
             </div>
-        </div>
-
-        <div class='prime' v-for="p in pageData.Subjects">
-            <div class='primetitle'>
-                <div>{{p.Title}}</div>
-            </div>
-            <img v-bind:src='p.Media' class='panda' />
-            <div class='vsarea'>
-                <img src='Content/Image/vs.png' class='vs' />
-            </div>
-            <div class='people'>
-                <div class='primeone' v-for="cell in p.Options">
-                    <div class='nick' v-if="cell.ReferenceType==1">{{cell.Reference.Name}}</div>
-                    <div class='nick' v-else>{{cell.Title}}</div>
-                    <div class='introduce' v-if="cell.ReferenceType==1"> {{cell.Reference.Title}}</div>
-                    <div class='introduce' v-else>{{cell.Title}}介绍</div>
-                    <div class='ticket'>{{cell.Votes}}</div>
-                    <img class="btnSupp" src="Content/Image/support.png" v-if="cell.active" />
-                    <img class="btnSupp" src="Content/Image/unsupport.png" v-on:click="support(cell,p)" v-else />
-                </div>
-            </div>
-
-        </div>
-
-        <div class='buttonarea'>
-            <button class='button-disabled' disabled v-if="isVoted">感谢您的投票</button>
-            <button class='button' v-on:click="post" v-else>确认投票</button>
-        </div>
-
-        <div class='foot'>
-            <div class='ele'>
-                <img src='./Content/Image/campaign.png' class='dxm' />
-                <div class='rank'>分享大使</div>
-            </div>
-
-            <div class='ele' v-for="p in rankData">
-                <img v-bind:src='p.headimgurl' class='dxm' />
-                <div class='rank'>{{p.rank}}</div>
-            </div>
-        </div>
-
         <!-- <div class='news'>
           <div class='pandatitle'>
             <div>最新动态</div>
@@ -99,16 +104,18 @@
             </div>
           </div>
         </div> -->
-        <div class="subsc-tip" v-if="showRemarks">
+        <div class="subsc-tip" v-if="showRules">
             <div class="tip-wrap">
                 <div class="pandatitle">投票说明</div>
                 <div class="tip-content">
-                    <h4>您的投票关注之后即可生效</h4>
+                    <h4 style="text-align:center">您的投票关注之后即可生效</h4>
+                    <img src="Content/Image/qrcode.gif" style="width:100%;" />
                     <p>感谢您为守护大熊猫贡献自己的一份力量，为保证该投票的公平，公正以及真实性，投票人必须旅居澳大利亚且在您关注NEWS天天之后您的选择才会被记为有效投票。</p>
                     <!--<img src="Content/Image/"/>-->
                     <h4>快来转发到朋友圈成为分享大使吧</h4>
                     <img src="Content/Image/rank.png" style="width:100%;" />
                     <p>助力大熊猫声援活动，在大选中发出我们澳洲华人自己的声音，成为人气分享大使，让您在为华人群体发声的同时获得丰厚奖品。每一张投票都是一份强而有力的力量，关注并转发到朋友圈，通过您的专属链接关注并参与投票人数累计最多的十位分享大使最终会依照名次获得奖品（投票人必须在澳洲境内才能被记为有效投票）。快来吧！让澳洲听到来自我们华人的最强音！</p>
+                    <img src="Content/Image/share.png" style="width:100%;" />
                     <h4>分享大使前十名奖励：</h4>
                     <p>第一名：人民币3,000元</p>
                     <p>第二名：人民币1,000元</p>
@@ -117,28 +124,49 @@
                     <h4>投票截止日期为：</h4>
                     <p>（澳大利亚东部时间5月18日晚上11：59：59）</p>
                     <br />
-                    <img src="Content/Image/share.png" style="width:100%;" />
+                    <h4 style="text-align:center">您的投票关注之后即可生效</h4>
+                    <img src="Content/Image/qrcode.gif" style="width:100%;" />
+                </div>
+                <div class="tip-foot" v-on:click="showRules=false">
+                    感谢您的关注
+                </div>
+            </div>
+        </div>
+
+        <div class="subsc-tip" v-if="showRemarks">
+            <div class="tip-wrap">
+                <div class="pandatitle">免责条款</div>
+                <div class="tip-content">
+
                     <h4>*免责声明：</h4>
                     <p>1. 本活动期间发生任何不可抗力事件本活动不能实现，NEWS天天因此免责。不可抗力是指不能控制、不可预见或不能避免，即使预见亦无法避免的事件，该事件使任何一方根据本协议履行其全部或部分义务已不可能。包括社会异常事件、自然灾害或政府管制行为而造成等非基于NEWS天天过错的行为。</p>
+                    <br />
                     <p>2. 用户自身主观过错或恶意，如不按正常流程操作、填写信息不真实、不完整等类似情形致使此次抽奖无效、无法核验用户真实信息而不能领取奖品的，NEWS天天免除支付奖项的责任。</p>
+                    <br />
                     <p>3. 因活动要求获奖之后需要您提供的个人资料，如：您的姓名、电话号码等，在未经您同意的情况下，NEWS天天不会将您的任何资料以任何方式泄露给任何一方。</p>
+                    <br />
                     <p>4. 任何由于网络问题、黑客攻击、计算机病毒侵入或发作、因政府管制而造成的暂时性关闭等影响网络正常运行的不可抗力而造成的个人资料泄露、丢失、被盗用或被篡改等，NEWS天天均得免责不承担与奖品的领取或其他事宜相关的任何税费。</p>
+                    <br />
                     <p>5. NEWS天天对获奖者及其各自奖品的决定具有最终约束力。</p>
+                    <br />
                     <p>6. NEWS天天对于因奖品的接受、持有、使用或误操作而造成的任何形式的损失或损害，或者声称造成的所有伤害或损害不承担任何赔偿责任；NEWS天天也不承担因此而产生的任何相关费用（包括但不限于医疗费、空中或陆地交通工具转乘费用、住宿费用、机场税、保险等）。</p>
+                    <br />
                     <p>7. 活动参与者因为违反本声明的规定而触犯中华人民共和国法律以及澳大利亚联邦法律的，一切后果自己负责，NEWS天天不承担任何责任。</p>
+                    <br />
                     <p>8. 凡以任何方式参加本次活动的，视为自愿接受本免责声明的约束。</p>
+                    <br />
                     <p>9. 本声明未涉及的问题参见国家有关法律法规，当本声明与国家法律法规冲突时，以国家法律法规为准。</p>
+                    <br />
                     <p>10. 此次活动NEWS天天完全遵守国家法律法规，此活动NEWS天天不存在任何销售或营利行为，由于他人原因违反国家法律法规，与本公司无关。</p>
                     <h4>*关于解释权</h4>
                     <p>本免责声明以及其修改权、更新权及最终解释权均属NEWS天天所有</p>
                 </div>
-                <!--<div class="tip-foot" v-on:click="showRemarks=false">
-                    感谢您的关注
-                </div>-->
+                <div class="tip-foot" v-on:click="showRemarks=false">
+                    关闭
+                </div>
             </div>
         </div>
     </div>
-
 </body>
 <script src="index.js"></script>
 </html>

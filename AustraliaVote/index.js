@@ -18,23 +18,25 @@ get_wxconfig(res => {
     });
 
     wx.ready(() => {
-    wx.onMenuShareAppMessage({
-        title: shareTitle, // 分享标题
-        desc: shareContent, // 分享描述
-        link: shareLink, // 分享链接
-        imgUrl: shareImg, // 分享图标
+        if (!is_iOS()) {
+            wx.onMenuShareAppMessage({
+                title: shareTitle, // 分享标题
+                desc: shareContent, // 分享描述
+                link: shareLink, // 分享链接
+                imgUrl: shareImg, // 分享图标
+            });
+
+            wx.onMenuShareTimeline({
+                title: shareTitle, // 分享标题
+                desc: shareContent, // 分享描述
+                link: shareLink, // 分享链接
+                imgUrl: shareImg, // 分享图标
+            });
+        }
+        Vue.prototype.wx = wx;
     });
 
-    wx.onMenuShareTimeline({
-        title: shareTitle, // 分享标题
-        desc: shareContent, // 分享描述
-        link: shareLink, // 分享链接
-        imgUrl: shareImg, // 分享图标
-    });
-    Vue.prototype.wx = wx;
-});
-
-Vue.prototype.$http = axios;
+    Vue.prototype.$http = axios;
     // 加载页面
     pageLoad();
 
@@ -71,7 +73,14 @@ function render_page() {
         data() {
             return {
                 showRemarks: false,
+                showRules: false,
                 likeStatus: false,
+                shareObject: {
+                    title: '',
+                    desc: '',
+                    link: '',
+                    imgUrl: ''
+                },
                 pageData: {},
                 postData: {},
                 userInfo: {},
@@ -153,7 +162,7 @@ function render_page() {
                     document.documentElement.scrollTop = 0;
                     loading.hide();
                     weui.toast("投票成功");
-                    that.showRemarks = true;
+                    that.showRules = true;
                     this.getTopic();
                 }, err => {
                     loading.hide();
@@ -162,16 +171,28 @@ function render_page() {
             },
 
             getTopic(callback) {
+                var that = this;
                 get_topic(query.topic, this.postData.uid,
                     res => {
+                        console.log(res);
+                        res.Subjects.sort((i, j) => i.Order > j.Order);
                         let media = res.Media;
                         if (!media.startsWith('http://') && !media.startsWith('https://'))
                             media = server + media;
                         pageParam.invite = this.postData.uid;
-                        shareTitle = res.Title;
-                        shareContent = res.Content;
-                        shareLink = getPageUrl();
-                        shareImg = media;
+
+                        if (is_iOS()) {
+                            that.shareObject.title = res.Title;
+                            that.shareObject.desc = res.Content;
+                            that.shareObject.link = getPageUrl();
+                            that.shareObject.imgUrl = media;
+                        }
+                        else {
+                            shareTitle = res.Title;
+                            shareContent = res.Content;
+                            shareLink = getPageUrl();
+                            shareImg = media;
+                        }
                         let myvotes = res.MyVotes || [];
                         for (var value of res.Subjects) {
                             for (var opt of value.Options) {
@@ -227,6 +248,10 @@ function render_page() {
         mounted() {
             this.getTopic();
             this.getUserInfo();
+            if (is_iOS()) {
+                wx.onMenuShareAppMessage(this.shareObject);
+                wx.onMenuShareTimeline(this.shareObject);
+            }
         }
     });
 };

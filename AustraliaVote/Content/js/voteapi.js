@@ -201,3 +201,10 @@ function get_rank(topicId, openId, success, error) {
         })
         .catch(error);
 };
+
+/**
+ * 设备是否为iOS
+ * */
+function is_iOS() {
+    return /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent);
+}

@@ -39,7 +39,12 @@ namespace VoteCore.Services
         private readonly string SQL_SAVE_USER_OPENID = @"
                if not exists(select * from Wx_User where openid=@openid)
 	              insert Wx_User(openid,ip_address,ip_region) Values(@openid,@ip_address,@ip_region)
-               if (@topicId <> '' and @invite <> '' and @openid <> @invite) and (not exists(select * from Wx_UserRelation where TopicId=@topicId and UserId=@openid and FromUserId=@invite))
+	               --非本人
+               if (@topicId <> '' and @invite <> '' and @openid <> @invite) 
+                  --不存在这条记录
+	              and (not exists(select * from Wx_UserRelation where TopicId=@topicId and UserId=@openid and FromUserId=@invite)
+	              --openid在主题内没投过票
+	              and (not exists(select * from Vote_Pool where TopicId=@topicId and VoteUser=@openid)))
 	              insert Wx_UserRelation(TopicId, UserId, FromUserId) Values(@topicId, @openid, @invite)";
 
         /// <summary>
