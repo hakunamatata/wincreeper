@@ -19,6 +19,7 @@ namespace VoteCore.Components
         public string EnglishName {get; set;} = string.Empty;
         public string Description {get; set;} = string.Empty;
         public string EnglishDescription {get; set;} = string.Empty;
+        public string Source { get; set; } = string.Empty;
         public Status Status {get; set;} = Status.Actived;
     }
 }

@@ -46,5 +46,17 @@ namespace WinApp.Components
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
+        private void downloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new SaveFileDialog()) {
+                dialog.Title = "保存二维码";
+                dialog.Filter = "jpeg文件(*.jpg)";
+                dialog.RestoreDirectory = true;
+                dialog.FileName = "网页二维码" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                if (dialog.ShowDialog() == DialogResult.OK) {
+                    pictureBox1.Image.Save(dialog.FileName);
+                }
+            }
+        }
     }
 }

@@ -38,6 +38,13 @@ namespace AustraliaVote.Controllers
         private WxUserService userService;
 
         [Route("vote/topic/{id}")]
+        [HttpOptions]
+        public IHttpActionResult GetTopicOption(string id, string uid)
+        {
+            return Ok();
+        }
+
+        [Route("vote/topic/{id}")]
         [HttpGet]
         public IHttpActionResult GetTopic(string id, string uid)
         {

@@ -17,82 +17,89 @@
 </head>
 <body>
     <div id="app" v-cloak>
-        
-            <div class='title'>
-                <img src="./Content/Image/austrlia.jpg" class='map' />
-                <div class='dxtitle'>{{pageData.Title}}</div>
-            </div>
-            <div v-if="!showRemarks && !showRules">
-                <div class='pandaContainer'>
-                    <div class='pandatitle'>
-                        <div>{{pageData.SubTitle}}</div>
-                    </div>
-                    <img v-bind:src='pageData.Media' class='panda' />
-                    <div class='opera'>
-                        <div class='content'>
-                            {{pageData.Content}}
-                            <div class='openread'>
-                                <!-- <div class='open'>展开阅读</div> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class='heartContainer'>
-                        <div class='heartArea'>
-                            <div>
-                                <img src='./Content/Image/heart.png' class='heart' />
-                            </div>
-                            <div class='heartCount'>{{pageData.Likes}}</div>
-                        </div>
-                        <div class="heartRight">
-                            <img src='./Content/Image/support.png' class='support' v-if="likeStatus" />
-                            <img src='./Content/Image/unsupport.png' class='support' v-on:click="like(pageData.Id)" v-else />
+
+        <div class='title'>
+            <img src="./Content/Image/austrlia.jpg" class='map' />
+            <div class='dxtitle'>{{pageData.Title}}</div>
+        </div>
+        <div v-if="!showRemarks && !showRules">
+            <div class='pandaContainer'>
+                <div class='pandatitle'>
+                    <div>澳大利亚工党</div>
+                </div>
+                <img v-bind:src='pageData.Media' class='panda' />
+                <div class='opera'>
+                    <div class='content'>
+                        {{pageData.Content}}
+                        <div class='openread'>
+                            <!-- <div class='open'>展开阅读</div> -->
                         </div>
                     </div>
                 </div>
-
-                <div class='prime' v-for="p in pageData.Subjects">
-                    <div class='primetitle'>
-                        <div>{{p.Title}}</div>
-                    </div>
-                    <img v-bind:src='p.Media' class='panda' />
-                    <div class='vsarea'>
-                        <img src='Content/Image/vs.png' class='vs' />
-                    </div>
-                    <div class='people'>
-                        <div class='primeone' v-for="cell in p.Options">
-                            <div class='nick' v-if="cell.ReferenceType==1">{{cell.Reference.Name}}</div>
-                            <div class='nick' v-else>{{cell.Title}}</div>
-                            <div class='introduce' v-if="cell.ReferenceType==1"> {{cell.Reference.Title}}</div>
-                            <div class='introduce' v-else>{{cell.Title}}介绍</div>
-                            <div class='ticket'>{{cell.Votes}}</div>
-                            <img class="btnSupp" src="Content/Image/support.png" v-if="cell.active" />
-                            <img class="btnSupp" src="Content/Image/unsupport.png" v-on:click="support(cell,p)" v-else />
+                <div class='heartContainer'>
+                    <div class='heartArea'>
+                        <div>
+                            <img src='./Content/Image/heart.png' class='heart' />
                         </div>
+                        <div class='heartCount'>{{pageData.Likes}}</div>
                     </div>
-
-                </div>
-
-                <div class='buttonarea'>
-                    <button class='button-disabled' disabled v-if="isVoted">感谢您的投票</button>
-                    <button class='button' v-on:click="post" v-else>确认投票</button>
-                </div>
-
-                <div class='foot'>
-                    <div class='ele'>
-                        <img src='./Content/Image/campaign.png' class='dxm' />
-                        <div class='rank'>分享大使</div>
+                    <div class="heartRight">
+                        <img src='./Content/Image/support.png' class='support' v-if="likeStatus" />
+                        <img src='./Content/Image/unsupport.png' class='support' v-on:click="like(pageData.Id)" v-else />
                     </div>
-
-                    <div class='ele' v-for="p in rankData">
-                        <img v-bind:src='p.headimgurl' class='dxm' />
-                        <div class='rank'>{{p.rank}}</div>
-                    </div>
-
-                </div>
-                <div class="copyright">
-                    Copyright<sup>©</sup>2019 by News天天 &nbsp;&nbsp; <a v-on:click="showRules=true;window.scrollTo({top:0});">活动规则</a> | <a v-on:click="showRemarks=true;window.scrollTo({top:0});">免责条款</a>
                 </div>
             </div>
+
+            <div class='prime' v-for="p in pageData.Subjects">
+                <div class='primetitle'>
+                    <div>{{p.Title}}</div>
+                </div>
+                <img v-bind:src='p.Media' class='panda' />
+                <div class='vsarea'>
+                    <img src='Content/Image/vs.png' class='vs' />
+                </div>
+                <div class='people'>
+                    <div class='primeone' v-for="cell in p.Options">
+                        <div class='nick' v-if="cell.ReferenceType==1">{{cell.Reference.Name}}</div>
+                        <div class='nick' v-else>{{cell.Title}}</div>
+                        <div class='introduce' v-if="cell.ReferenceType==1">
+                            <!--{{cell.Reference.Title}}-->
+                            <a v-bind:href="cell.Reference.Source" v-if="cell.Reference && cell.Reference.Source && cell.Reference.Source.length>0" style="color: rgb(0, 145, 255)">{{cell.Reference.Title}}介绍</a>
+                            <span v-else>{{cell.Reference.Title}}</span>
+                        </div>
+                        <div class='introduce' v-else>
+                            <a v-bind:href="cell.Reference.Source" v-if="cell.Reference && cell.Reference.Source && cell.Reference.Source.length>0" style="color: rgb(0, 145, 255)">{{cell.Title}}介绍</a>
+                            <span v-else>{{cell.Title}}</span>
+                        </div>
+                        <div class='ticket'>{{cell.Votes}}</div>
+                        <img class="btnSupp" src="Content/Image/support.png" v-if="cell.active" />
+                        <img class="btnSupp" src="Content/Image/unsupport.png" v-on:click="support(cell,p)" v-else />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class='buttonarea'>
+                <button class='button-disabled' disabled v-if="isVoted">感谢您的投票</button>
+                <button class='button' v-on:click="post" v-else>确认投票</button>
+            </div>
+
+            <div class='foot'>
+                <div class='ele'>
+                    <img src='./Content/Image/campaign.png' class='dxm' />
+                    <div class='rank'>分享大使</div>
+                </div>
+
+                <div class='ele' v-for="p in rankData">
+                    <img v-bind:src='p.headimgurl' class='dxm' />
+                    <div class='rank'>{{p.rank}}</div>
+                </div>
+
+            </div>
+            <div class="copyright">
+                Copyright<sup>©</sup>2019 by News天天 &nbsp;&nbsp; <a v-on:click="showRules=true;window.scrollTo({top:0});">活动规则</a> | <a v-on:click="showRemarks=true;window.scrollTo({top:0});">免责条款</a>
+            </div>
+        </div>
         <!-- <div class='news'>
           <div class='pandatitle'>
             <div>最新动态</div>

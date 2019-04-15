@@ -47,6 +47,7 @@ namespace CreSync.ServiceCore.Services.WechatSynchronouse
                 }
                 catch (Exception ex) {
                     Debug.Print(ex.Message);
+                    log.Error(ex);
                 }
             });
             base.PeriodExecutionAsync(arg);

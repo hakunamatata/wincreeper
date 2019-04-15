@@ -264,3 +264,4 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/AustraliaVote/Static/Pages/663fa22f-3803-4e87-9097-436e88929338

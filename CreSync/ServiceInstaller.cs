@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CreSync.ServiceCore;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,9 +23,9 @@ namespace CreSync
             serviceInstaller = new System.ServiceProcess.ServiceInstaller();
             processInstaller.Account = ServiceAccount.LocalSystem;
             serviceInstaller.StartType = ServiceStartMode.Automatic;
-            serviceInstaller.ServiceName = ConfigurationManager.AppSettings["ServiceName"] ?? "Untitled Service";
-            serviceInstaller.DisplayName = ConfigurationManager.AppSettings["ServiceDisplayName"] ?? "未命名服务";
-            serviceInstaller.Description = ConfigurationManager.AppSettings["ServiceDescription"] ?? "吴描述";
+            serviceInstaller.ServiceName = AppSetting.Current.ServiceName ?? "Untitled Service";
+            serviceInstaller.DisplayName = AppSetting.Current.ServiceName ?? "未命名服务";
+            serviceInstaller.Description = AppSetting.Current.ServiceDescription ?? "无描述";
             this.AfterInstall += ServiceInstaller_AfterInstall;
             Installers.Add(serviceInstaller);
             Installers.Add(processInstaller);
@@ -38,4 +39,3 @@ namespace CreSync
         }
     }
 }
-    

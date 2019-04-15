@@ -7,6 +7,7 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+using ServiceBase = System.ServiceProcess.ServiceBase;
 
 namespace CreSync
 {
@@ -20,7 +21,9 @@ namespace CreSync
             var boot = new Bootstrap(AppSetting.Current);
 
             if (boot.Initialize()) {
+                Console.WriteLine("service initializing...");
                 boot.Start();
+                Console.WriteLine("service started.");
             }
             else {
                 Console.WriteLine("service initialize failed.");
@@ -28,9 +31,9 @@ namespace CreSync
         }
         static void RunAsService()
         {
-            //ServiceBase[] servicesToRun;
-            //servicesToRun = new ServiceBase[] { new MainService() };
-            //ServiceBase.Run(servicesToRun);
+            ServiceBase[] servicesToRun;
+            servicesToRun = new ServiceBase[] { new MainService() };
+            ServiceBase.Run(servicesToRun);
         }
 
         static void Main(string[] args)
@@ -40,7 +43,7 @@ namespace CreSync
                 return;
             }
 
-            Console.WriteLine("Welcome to Wowu88 Xml Parser Registeration Program！");
+            Console.WriteLine("Welcome to Creeper Program！");
             Console.WriteLine("press any key to continue...");
             Console.WriteLine("-[r]: Run as Console");
             Console.WriteLine("-[i]: Install service");

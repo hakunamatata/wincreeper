@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CreSync.ServiceCore.Configuration;
+using log4net;
 
 namespace CreSync.ServiceCore.Services
 {
     public class PeriodService : ServiceBase
     {
+        protected static ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public IServiceConfig Config;
         Timer timerPeriod;
         TimerCallback periodAction;
@@ -27,7 +29,7 @@ namespace CreSync.ServiceCore.Services
 
         protected virtual void PeriodExecutionAsync(object arg)
         {
-
+            log.Info($"Period Service {ServiceName} Excuted.");
         }
 
     }
