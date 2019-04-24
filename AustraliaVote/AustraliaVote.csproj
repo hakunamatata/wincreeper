@@ -99,10 +99,14 @@
     <Content Include="Content\Image\qrcode.gif" />
     <Content Include="Content\Image\rank.png" />
     <Content Include="Content\Image\share.png" />
+    <Content Include="Content\Image\sharetip.PNG" />
     <Content Include="Content\Image\support.png" />
     <Content Include="Content\Image\unsupport.png" />
     <Content Include="Content\Image\vs.png" />
     <Content Include="Content\css\index.css" />
+    <Content Include="Content\Image\wx_share_url0.png" />
+    <Content Include="Content\Image\wx_share_url1.png" />
+    <Content Include="Content\Image\wx_share_url2.png" />
     <Content Include="Content\js\axios.js" />
     <Content Include="Content\js\voteapi.js" />
     <Content Include="Content\js\vue.min.js" />
@@ -110,6 +114,10 @@
     <Content Include="Global.asax" />
     <Content Include="index.html" />
     <Content Include="index.js" />
+    <Content Include="labor.html" />
+    <Content Include="labor.js" />
+    <Content Include="liber.html" />
+    <Content Include="liber.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -126,7 +134,9 @@
     <Content Include="Content\js\qs.js" />
     <Content Include="Config\log4net.config" />
     <Content Include="App_Data\ip2region.db" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

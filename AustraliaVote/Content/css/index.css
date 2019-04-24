@@ -280,15 +280,46 @@ body {
     }*/
 
 .foot {
-    display: flex;
     margin-left: 15px;
     margin-right: 15px;
-    height: 120px;
     background-color: white;
+    margin-bottom: 10px;
     border-radius: 10px;
+}
+
+.foot-rank {
+    display: flex;
     overflow-y: hidden;
     overflow-x: scroll;
-    margin-bottom: 10px;
+}
+
+.ele {
+    padding: 10px;
+    text-align: center;
+}
+
+.dxm {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #eee;
+    border-radius: 50%;
+}
+
+
+.fot {
+    margin: 15px 15px 0 15px;
+    font-size: .85em;
+    color: white;
+}
+
+.foot-desc {
+    padding: 5px;
+    text-align: center;
+    background-color: rgb(0, 145, 255);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    color:white;
+    font-size:14px;
 }
 
 .circleone {
@@ -317,19 +348,8 @@ body {
     height: 70px;
 }
 
-.dxm {
-    width: 60px;
-    height: 60px;
-    border: 1px solid #eee;
-    border-radius: 50%;
-}
 
-.ele {
-    margin-top: 25px;
-    margin-left: 20px;
-    text-align: center;
-    height: 100px;
-}
+
 
 .wrap {
     overflow-x: scroll;
@@ -463,6 +483,35 @@ body {
     .tip-content p {
         font-size: 14px;
     }
+
+    .tip-content .ttl {
+        text-align: center;
+        font-size: 15px;
+        color: red;
+    }
+
+.mask {
+    font-weight: bold;
+    /*渐变背景*/
+    background-image: -webkit-linear-gradient(left, #3498db, #f47920 10%, #d71345 20%, #f7acbc 30%, #ffd400 40%, #3498db 50%, #f47920 60%, #d71345 70%, #f7acbc 80%, #ffd400 90%, #3498db);
+    color: transparent; /*文字填充色为透明*/
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; /*背景剪裁为文字，只将文字显示为背景*/
+    background-size: 200% 100%; /*背景图片向水平方向扩大一倍，这样background-position才有移动与变化的空间*/
+    /* 动画 */
+    animation: masked-animation 4s infinite linear;
+}
+
+@keyframes masked-animation {
+    0% {
+        background-position: 0 0; /*background-position 属性设置背景图像的起始位置。*/
+    }
+
+    100% {
+        background-position: -100% 0;
+    }
+}
+
 
 .tip-foot {
     background-color: rgb(247, 181, 0);

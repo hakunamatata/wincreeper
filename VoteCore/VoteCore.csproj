@@ -70,12 +70,6 @@
     <Compile Include="Services\WxUserService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CreSync.ServiceCore\CreSync.ServiceCore.csproj">
-      <Project>{d833d4c0-70c0-4d18-a980-5b5324652b61}</Project>
-      <Name>CreSync.ServiceCore</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,8 +1,4 @@
 ﻿let wxConfig = {};
-let shareTitle = '';
-let shareContent = '';
-let shareLink = '';
-let shareImg = '';
 /*
  * 获取微信配置以及微信页面初始化
 **/
@@ -18,41 +14,24 @@ get_wxconfig(res => {
     });
 
     wx.ready(() => {
-        if (!is_iOS()) {
-            wx.onMenuShareAppMessage({
-                title: shareTitle, // 分享标题
-                desc: shareContent, // 分享描述
-                link: shareLink, // 分享链接
-                imgUrl: shareImg, // 分享图标
-            });
-
-            wx.onMenuShareTimeline({
-                title: shareTitle, // 分享标题
-                desc: shareContent, // 分享描述
-                link: shareLink, // 分享链接
-                imgUrl: shareImg, // 分享图标
-            });
-        }
         Vue.prototype.wx = wx;
     });
 
     Vue.prototype.$http = axios;
+    wxLoading = weui.loading('加载中');
+
     // 加载页面
     pageLoad();
 
 }, err => {
 });
 
-
-
-
+let wxLoading;
 function pageLoad() {
-    if (query.code === '' || query.code == null) {
-        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + wxConfig.oauthid + '&redirect_uri=' + encodeURIComponent(location.href) + '&response_type=code&scope=snsapi_base&state=requestingCallback#wechat_redirect';
+    if (query.code == '' || query.code == null) {
+        location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + wxConfig.oauthid + '&redirect_uri=' + encodeURIComponent(getPageUrl()) + '&response_type=code&scope=snsapi_base&state=#wechat_redirect';
         return;
     };
-
-
 
     auth_base(res => {
         if (res.openid == '' || res.openid == null) {
@@ -62,7 +41,9 @@ function pageLoad() {
         globalData = { ...res, ...globalData };
         render_page();
     }, err => {
-        location.href = getPageUrl();
+        weui.alert('服务器繁忙, 请稍后再试', () => {
+            location.href = getPageUrl();
+        });
         return;
     });
 };
@@ -132,7 +113,7 @@ function render_page() {
             post() {
                 var that = this;
                 if (!this.userObtained) {
-                    //localStorage.setItem('tempVotes', JSON.stringify(this.postData));
+                    localStorage.setItem('tempVotes', JSON.stringify(this.postData));
                     weui.alert('为保证投票结果的准确性，需要您的授权', () => {
                         location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + wxConfig.oauthid + '&redirect_uri=' + encodeURIComponent(getPageUrl()) + '&response_type=code&scope=snsapi_userinfo&state=requestingCallback#wechat_redirect';
                     });
@@ -142,24 +123,28 @@ function render_page() {
                 /**
                  * 投票检查，是否有漏选
                  * */
-                try {
-                    this.pageData.Subjects.forEach(s => {
-                        var check = that.postData.subs.find(p => p.id == s.Id);
-                        if (check == null)
-                            throw '请对 \"' + s.Title + '\"进行投票';
-                        else if (check.ops.length == 0)
-                            throw '请对 \"' + s.Title + '\"进行投票';
-                        else if (check.ops.length > s.MaxOptions)
-                            throw '\"' + s.Title + '\" 最多只能投 ' + s.MaxOptions + '票';
-                    });
-                } catch (e) {
-                    weui.alert(e);
-                    return;
-                };
+                if (localStorage.getItem('tempVotes') == null) {
+                    // 没有临时数据, 为新一轮投票
+                    // 否则为授权之后的动作
+                    try {
+                        this.pageData.Subjects.forEach(s => {
+                            var check = that.postData.subs.find(p => p.id == s.Id);
+                            if (check == null)
+                                throw '请对 \"' + s.Title + '\"进行投票';
+                            else if (check.ops.length == 0)
+                                throw '请对 \"' + s.Title + '\"进行投票';
+                            else if (check.ops.length > s.MaxOptions)
+                                throw '\"' + s.Title + '\" 最多只能投 ' + s.MaxOptions + '票';
+                        });
+                    } catch (e) {
+                        weui.alert(e);
+                        return;
+                    };
+                }
 
                 var loading = weui.loading("提交选票中...");
                 vote_topic(query.topic, that.postData, res => {
-                    document.documentElement.scrollTop = 0;
+                    window.scrollTo({ top: 0 });
                     loading.hide();
                     weui.toast("投票成功");
                     that.showRules = true;
@@ -177,8 +162,10 @@ function render_page() {
                         console.log(res);
                         res.Subjects.sort((i, j) => i.Order > j.Order);
                         let media = res.Media;
-                        if (!media.startsWith('http://') && !media.startsWith('https://'))
+                        if (!media.startsWith('http://') && !media.startsWith('https://')) {
+                            if (media.startsWith('/')) media = media.replace('/', '');
                             media = server + media;
+                        }
                         pageParam.invite = this.postData.uid;
 
                         if (is_iOS()) {
@@ -188,10 +175,19 @@ function render_page() {
                             that.shareObject.imgUrl = media;
                         }
                         else {
-                            shareTitle = res.Title;
-                            shareContent = res.Content;
-                            shareLink = getPageUrl();
-                            shareImg = media;
+                            wx.onMenuShareAppMessage({
+                                title: res.Title, // 分享标题
+                                desc: res.Content, // 分享描述
+                                link: getPageUrl(), // 分享链接
+                                imgUrl: media, // 分享图标
+                            });
+
+                            wx.onMenuShareTimeline({
+                                title: res.Title, // 分享标题
+                                desc: res.Content, // 分享描述
+                                link: getPageUrl(), // 分享链接
+                                imgUrl: media, // 分享图标
+                            });
                         }
                         let myvotes = res.MyVotes || [];
                         for (var value of res.Subjects) {
@@ -203,13 +199,9 @@ function render_page() {
                             }
                         }
                         this.pageData = res;
-                        //if (localStorage.getItem('tempVotes') == null) {
                         this.postData.subs = res.MySubs || [];
-                        //} else {
-                        //    this.postData = JSON.parse(localStorage.getItem('tempVotes'))
-                        //     localStorage.removeItem('tempVotes');
-                        // }
                         if (callback) callback(res);
+                        wxLoading.hide();
                     }, err => {
                         console.log(err);
                     });
@@ -246,8 +238,14 @@ function render_page() {
             this.likeStatus = localStorage.getItem('like:' + query.topic) == '1';
         },
         mounted() {
-            this.getTopic();
             this.getUserInfo();
+            this.getTopic((res) => {
+                if (localStorage.getItem('tempVotes') != null) {
+                    this.postData = JSON.parse(localStorage.getItem('tempVotes'))
+                    this.post();
+                    localStorage.removeItem('tempVotes');
+                }
+            });
             if (is_iOS()) {
                 wx.onMenuShareAppMessage(this.shareObject);
                 wx.onMenuShareTimeline(this.shareObject);

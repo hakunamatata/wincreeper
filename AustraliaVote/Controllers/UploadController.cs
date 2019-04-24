@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace AustraliaVote.Controllers
 {
     public class UploadController : ApiController
     {
+        static ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         [Route("upload/static/page")]
         [HttpPost]
         public IHttpActionResult UploadStaticPage()
@@ -42,6 +44,7 @@ namespace AustraliaVote.Controllers
                 return Ok();
             }
             catch (Exception ex) {
+                log.Error(ex);
                 return InternalServerError(ex);
             }
         }

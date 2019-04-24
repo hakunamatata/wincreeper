@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using VoteCore.Components;
 using Dapper;
-using CreSync.ServiceCore.Data;
 using VoteCore.Models;
 
 namespace VoteCore.Services

@@ -13,9 +13,10 @@
     <script src="Content/js/qs.js"></script>
     <script src="Content/js/voteapi.js"></script>
     <link href="Content/css/vote.css" rel="stylesheet" />
-    <link href="Content/css/index.css" rel="stylesheet" />
+    <link href="Content/css/index.css?v=04171051" rel="stylesheet" />
 </head>
 <body>
+    <img src="./Content/Image/wx_share_url0.png" class="wxdefault" style="display:none;" />
     <div id="app" v-cloak>
 
         <div class='title'>
@@ -25,14 +26,14 @@
         <div v-if="!showRemarks && !showRules">
             <div class='pandaContainer'>
                 <div class='pandatitle'>
-                    <div>澳大利亚工党</div>
+                    <div>{{pageData.SubTitle}}</div>
                 </div>
-                <img v-bind:src='pageData.Media' class='panda' />
+                <img v-bind:src='pageData.Media' class='panda' v-on:click="location.href='http://wxwu88.com/wrap?uid=b8ed7010-0c4a-4fb4-a950-70c11a0444dd'" />
                 <div class='opera'>
                     <div class='content'>
                         {{pageData.Content}}
                         <div class='openread'>
-                            <!-- <div class='open'>展开阅读</div> -->
+                            <div class='open' v-on:click="location.href='http://wxwu88.com/wrap?uid=b8ed7010-0c4a-4fb4-a950-70c11a0444dd'">查看更多...</div>
                         </div>
                     </div>
                 </div>
@@ -84,17 +85,26 @@
                 <button class='button' v-on:click="post" v-else>确认投票</button>
             </div>
 
-            <div class='foot'>
-                <div class='ele'>
-                    <img src='./Content/Image/campaign.png' class='dxm' />
-                    <div class='rank'>分享大使</div>
-                </div>
+            <div class="foot">
+                <div class='foot-rank'>
+                    <div class='ele'>
+                        <img src='./Content/Image/campaign.png' class='dxm' />
+                        <div class='rank'>分享大使</div>
+                    </div>
 
-                <div class='ele' v-for="p in rankData">
-                    <img v-bind:src='p.headimgurl' class='dxm' />
-                    <div class='rank'>{{p.rank}}</div>
+                    <div class='ele' v-for="p in rankData">
+                        <img v-bind:src='p.headimgurl' class='dxm' />
+                        <div class='rank'>{{p.rank}}</div>
+                    </div>
                 </div>
-
+                <div class="foot-desc">
+                    十大分享大使
+                </div>
+            </div>
+            <div class="fot">
+                <p>成为分享大使:</p>
+                <p>1. 关注NEWS天天</p>
+                <p class="mask">2. 点击右上角转发（其他转发方式不计入您的票数）</p>
             </div>
             <div class="copyright">
                 Copyright<sup>©</sup>2019 by News天天 &nbsp;&nbsp; <a v-on:click="showRules=true;window.scrollTo({top:0});">活动规则</a> | <a v-on:click="showRemarks=true;window.scrollTo({top:0});">免责条款</a>
@@ -118,16 +128,20 @@
                     <h4 style="text-align:center">您的投票关注之后即可生效</h4>
                     <img src="Content/Image/qrcode.gif" style="width:100%;" />
                     <p>感谢您为守护大熊猫贡献自己的一份力量，为保证该投票的公平，公正以及真实性，投票人必须旅居澳大利亚且在您关注NEWS天天之后您的选择才会被记为有效投票。</p>
-                    <!--<img src="Content/Image/"/>-->
+                    <h4 class="ttl">成为分享大使</h4>
+                    <img src="Content/Image/sharetip.png" style="width:100%" />
+                    <p>转发到朋友圈为熊猫夫妇争取更多支持</p>
+                    <p>参与步骤</p>
+                    <p>1. 关注NEWS天天</p>
+                    <p class="mask">2. 点击右上角转发（其他转发方式不计入您的票数）</p>
+                    <img src="Content/Image/share.png" style="width:100%;" />
                     <h4>快来转发到朋友圈成为分享大使吧</h4>
                     <img src="Content/Image/rank.png" style="width:100%;" />
                     <p>助力大熊猫声援活动，在大选中发出我们澳洲华人自己的声音，成为人气分享大使，让您在为华人群体发声的同时获得丰厚奖品。每一张投票都是一份强而有力的力量，关注并转发到朋友圈，通过您的专属链接关注并参与投票人数累计最多的十位分享大使最终会依照名次获得奖品（投票人必须在澳洲境内才能被记为有效投票）。快来吧！让澳洲听到来自我们华人的最强音！</p>
-                    <img src="Content/Image/share.png" style="width:100%;" />
                     <h4>分享大使前十名奖励：</h4>
-                    <p>第一名：人民币3,000元</p>
-                    <p>第二名：人民币1,000元</p>
-                    <p>第三名：人民币500元</p>
-                    <p>第四至十名：人民币100元</p>
+                    <p>第一名：阿德莱德大熊猫之旅：阿德莱德到澳洲任意城市往返机票一张（价值最高可达500澳元），阿德莱德动物园门票一张以及大熊猫T-shirt。</p>
+                    <p>第二名：大熊猫神秘大奖：大熊猫T-shirt以及大熊猫神秘礼包</p>
+                    <p>第三名 - 第十名：大熊猫T-shirt一件</p>
                     <h4>投票截止日期为：</h4>
                     <p>（澳大利亚东部时间5月18日晚上11：59：59）</p>
                     <br />
@@ -175,5 +189,5 @@
         </div>
     </div>
 </body>
-<script src="index.js"></script>
+<script src="index.js?v=04170910"></script>
 </html>

@@ -12,23 +12,26 @@ namespace VoteCore.Services
     {
         private readonly string SQL_TOPIC_RANK = @"
                 select top 10 * from (
-                select u.openid,u.nickname,u.headimgurl,count(p.Id) [rank]
-                from [Vote].[dbo].[Vote_Pool] p
-                inner join Wx_UserRelation r on p.VoteUser = r.UserId
-                inner join Wx_User u on r.FromUserId = u.openid
-                where p.TopicId = @topicId
-                group by u.openid,u.nickname,u.headimgurl) as t
+                  select u.openid,u.nickname,u.headimgurl,Count(p.VoteUser) [rank] from ( select  TopicId,VoteUser, Max(VoteDate) VoteDate from Vote_Pool group by TopicId, VoteUser) p
+		          inner join Wx_UserRelation r on p.VoteUser = r.UserId and p.TopicId = r.TopicId and p.VoteDate > r.CreateDate
+		          inner join Wx_User u on r.FromUserId = u.openid
+		          inner join Wx_User i on i.openid = p.VoteUser
+		          where p.TopicId = @topicId
+		          group by u.openid, u.nickname, u.headimgurl) as t
                 order by t.[rank] desc";
 
-        private readonly string SQL_USER_TOPIC_RANK = @"
-                select top 10 * from (
-                select u.openid,u.nickname,u.headimgurl,count(p.Id) [rank]
-                from [Vote].[dbo].[Vote_Pool] p
-                inner join Wx_UserRelation r on p.VoteUser = r.UserId
-                inner join Wx_User u on r.FromUserId = u.openid
-                where p.TopicId = @topicId and r.FromUserId=@userId
-                group by u.openid,u.nickname,u.headimgurl) as t
-                order by t.[rank] desc";
+        //private readonly string SQL_USER_TOPIC_RANK = @"
+        //        declare @subjects int
+        //        select @subjects = count(*) from Vote_Subject where TopicId=@topicId and Status = 1
+        //        if @subjects = 0 set @subjects = 1
+        //        select top 10 * from (
+        //        select u.openid,u.nickname,u.headimgurl,count(p.Id)/@subjects [rank]
+        //        from [Vote].[dbo].[Vote_Pool] p
+        //        inner join Wx_UserRelation r on p.VoteUser = r.UserId
+        //        inner join Wx_User u on r.FromUserId = u.openid
+        //        where p.TopicId = @topicId and r.FromUserId=@userId
+        //        group by u.openid,u.nickname,u.headimgurl) as t
+        //        order by t.[rank] desc";
         private readonly string SQL_GET_USER = @"select * from Wx_User where openid=@openid";
 
         private readonly string SQL_SAVE_USER = @"
@@ -41,8 +44,8 @@ namespace VoteCore.Services
 	              insert Wx_User(openid,ip_address,ip_region) Values(@openid,@ip_address,@ip_region)
 	               --非本人
                if (@topicId <> '' and @invite <> '' and @openid <> @invite) 
-                  --不存在这条记录
-	              and (not exists(select * from Wx_UserRelation where TopicId=@topicId and UserId=@openid and FromUserId=@invite)
+                  --openid在主体内没有被拉过票
+	              and (not exists(select * from Wx_UserRelation where TopicId=@topicId and UserId=@openid)
 	              --openid在主题内没投过票
 	              and (not exists(select * from Vote_Pool where TopicId=@topicId and VoteUser=@openid)))
 	              insert Wx_UserRelation(TopicId, UserId, FromUserId) Values(@topicId, @openid, @invite)";
@@ -73,17 +76,17 @@ namespace VoteCore.Services
         /// <returns></returns>
         public List<TopicRank> GetTopicInviteRank(string topicId, string userId = "")
         {
-            var rank = Connection.Query<TopicRank>(SQL_TOPIC_RANK, new { topicId }).ToList();
+            var rank = Connection.Query<TopicRank>(SQL_TOPIC_RANK, new { topicId }).Where(p => p.rank > 0).ToList();
             if (!string.IsNullOrEmpty(userId)) {
+                TopicRank me;
                 if (rank.Any(p => p.openid == userId)) {
-                    var me = rank.First(p => p.openid == userId);
+                    me = rank.First(p => p.openid == userId);
                     rank.Remove(me);
                 }
-                var mine = Connection.QueryFirstOrDefault<TopicRank>(SQL_USER_TOPIC_RANK, new { topicId, userId });
-                if (mine == null) {
-                    mine = Connection.QueryFirst<TopicRank>(SQL_GET_USER, new { openid = userId });
+                else {
+                    me = Connection.QueryFirst<TopicRank>(SQL_GET_USER, new { openid = userId });
                 }
-                rank.Insert(0, mine);
+                rank.Insert(0, me);
             }
             return rank;
         }

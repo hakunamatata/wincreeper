@@ -1,10 +1,12 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Util;
+using VoteCore.Components;
 using VoteCore.Models;
 using VoteCore.Services;
 
@@ -34,12 +36,11 @@ namespace AustraliaVote.Controllers
 {
     public class VoteController : ApiController
     {
+        static ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private VoteService voteService;
         private WxUserService userService;
 
-        [Route("vote/topic/{id}")]
-        [HttpOptions]
-        public IHttpActionResult GetTopicOption(string id, string uid)
+        public IHttpActionResult Options()
         {
             return Ok();
         }
@@ -73,9 +74,11 @@ namespace AustraliaVote.Controllers
                 return Ok(topic);
             }
             catch (ArgumentNullException ex_null) {
+                log.Error(ex_null);
                 return InternalServerError(ex_null);
             }
             catch (Exception ex) {
+                log.Error(ex);
                 return InternalServerError(ex);
             }
         }
@@ -89,6 +92,7 @@ namespace AustraliaVote.Controllers
                 return Ok(voteService.Vote(id, voteBody));
             }
             catch (Exception ex) {
+                log.Error(ex);
                 return InternalServerError(ex);
             }
         }
@@ -102,6 +106,7 @@ namespace AustraliaVote.Controllers
                 return Ok();
             }
             catch (Exception ex) {
+                log.Error(ex);
                 return InternalServerError(ex);
             }
         }
@@ -116,6 +121,7 @@ namespace AustraliaVote.Controllers
                 return Ok(voteService.Like(likeBody.tid));
             }
             catch (Exception ex) {
+                log.Error(ex);
                 return InternalServerError(ex);
             }
         }
@@ -129,9 +135,15 @@ namespace AustraliaVote.Controllers
                 if (string.IsNullOrEmpty(rankBody.tid))
                     throw new ArgumentNullException("tid");
 
-                return Ok(userService.GetTopicInviteRank(rankBody.tid, rankBody.uid));
+                List<TopicRank> rank = Cache.GetCache<List<TopicRank>>("topicRank");
+                if (rank == null) {
+                    rank = userService.GetTopicInviteRank(rankBody.tid, rankBody.uid);
+                    Cache.WriteCache("topicRank", rank, DateTime.Now.AddMinutes(5));
+                }
+                return Ok(rank);
             }
             catch (Exception ex) {
+                log.Error(ex);
                 return InternalServerError(ex);
             }
         }

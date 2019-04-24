@@ -41,6 +41,7 @@ namespace AustraliaVote.Controllers
                 return Ok(JsonConvert.DeserializeObject<JsCode2SesstionResult>(result));
             }
             catch (Exception ex) {
+                log.Error(ex);
                 return InternalServerError(ex);
             }
         }
@@ -59,6 +60,7 @@ namespace AustraliaVote.Controllers
                 return Ok(JSSDK.GetWxConfig(post.url));
             }
             catch (Exception ex) {
+                log.Error(ex);
                 return InternalServerError(ex);
             }
         }
@@ -109,6 +111,7 @@ namespace AustraliaVote.Controllers
                 });
             }
             catch (Exception ex) {
+                log.Error(ex);
                 return InternalServerError(ex);
             }
         }
@@ -145,6 +148,7 @@ namespace AustraliaVote.Controllers
                 return Ok(userInfo);
             }
             catch (Exception ex) {
+                log.Error(ex);
                 return InternalServerError(ex);
             }
         }
